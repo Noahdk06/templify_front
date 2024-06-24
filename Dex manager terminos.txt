@@ -1,0 +1,19 @@
+DEX es una pagina para hacer funcionar un sistema de carteleria digital
+Terminos:
+Player DEX: Software(Pagina)
+Madia player: Hardware(Pantalla); De prueba: Para testeos internos; De Produccion: Para visibilidad publica
+Playlist: Un conjunto de contenidos que se reproducen en secuencia
+Layout: Como se muestran los contenidos(posicion) en el media player
+Herencia: ??? 
+Grupos: Tienen atributos que se comparten entre varios media players
+Reproduccion sincrozando: Muchas pantallas muestra en muchas partes el mismo video
+Etiquetas: Sistema de filtrado de contenidos en playlists
+Flujo de publicacion: Los contenidos se publican sin necesidad de autorizacion
+Flujo de publicacion desactivado: Las playlists tienen dos atributos sin el modo de publicacion simple; Borrador: Se puede modificar y solo puede ser recibida por un media player de tipo prueba; Publicadas: No se pueden modificar y pueden ser recibidas por players prueba o produccion.
+Grabar: Guardar las modificaciones del proyecto
+Guardar: Descargar el proyecto DEX de manera local
+Modificacion de layouts: Si un layout esta siendo utilizado por una playlist no puede ser modificado
+Calendarios: Hay dos tipos de calendario; Los de tipo prueba solo pueden reproducirse en players de tipo prueba  y los de tipo produccion con tipo produccion.
+Politica de transmision: Cuando se muestra
+Politica de hardware: Define el funcionamiento del media player y sus condiciones
+En el 
