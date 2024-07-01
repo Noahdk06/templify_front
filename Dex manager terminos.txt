@@ -17,3 +17,7 @@ Calendarios: Hay dos tipos de calendario; Los de tipo prueba solo pueden reprodu
 Politica de transmision: Cuando se muestra
 Politica de hardware: Define el funcionamiento del media player y sus condiciones
 En el 
+
+npm i   
+npm run 
+npm start 
