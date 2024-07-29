@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="form-container">
+        <form className="registration-form">
+          <div className="form-group">
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
+          </div>
+          <div className="form-group">
+            <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
+          </div>
+          <div className="form-group">
+            <input type="text" id="usuario" name="usuario" placeholder="Usuario" />
+          </div>
+          <div className="form-group">
+            <input type="password" id="contrasena" name="contrasena" placeholder="Contraseña" />
+          </div>
+          <div className="button-group">
+            <button type="submit" className="btn register-btn">Registrarse</button>
+            <button type="button" className="btn login-btn">Iniciar sesión</button>
+          </div>
+        </form>
+        <div className="social-login">
+          <button className="btn social-button google">Usar Google</button>
+          <button className="btn social-button apple">Usar Apple</button>
+          <button className="btn social-button facebook">Usar Facebook</button>
+        </div>
+      </div>
     </div>
   );
 }

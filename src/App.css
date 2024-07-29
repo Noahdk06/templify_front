@@ -1,512 +1,110 @@
-/* Estilos generales */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0; /* Color de fondo */
-
-}
-/*aaa*/
-.registration-form {
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffffff; /* Color del formulario */
-  border-radius: 10px;
-  padding: 40px; /* Aumenté el espaciado para hacerlo más grande */
-  max-width: 900px; /* Ajustamos el ancho máximo */
-  margin: 0 auto;
-  background-image: url(isf.png);
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-size: 70%; /* Ajusta la imagen para que cubra todo el contenedor */
-  background-position: center; /* Centra la imagen en el contenedor */
-}
-
-.left-half,
-.right-half {
-  flex: 1;
-  padding: 40px; /* Aumentamos el padding para agregar más espacio */
-}
-
-/* Estilos para los campos de entrada */
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 12px; /* Aumentamos el tamaño del padding */
-  margin-bottom: 15px; /* Incrementamos el espacio entre los campos */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px; /* Aumentamos el tamaño de fuente */
-}
-
-/* Estilos para el botón de registro */
-button[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  background-color: #82C0CC; /* Color del botón */
-  color: #000000;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Estilos para los botones de redes sociales */
-.social-button {
-  display: block;
-  padding: 8px 12px; /* Reducimos el padding vertical y horizontal */
-  margin-top: 15px; /* Aumentamos el espacio entre los botones */
-  margin-bottom: 15px; /* Aumentamos el espacio entre los botones */
-  text-align: center;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 14px;
-  background-color: #f0f0f0;
-  color: #333;
-  transition: background-color 0.3s ease;
-}
-
-button[type="submit"] {
-  width: 107%; /* Cambiamos el ancho a automático para que se ajuste al contenido */
-  padding: 12px;
-  background-color: #82C0CC;
-  color: #000000;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-
-.social-button:hover {
-  background-color: #ddd;
-}
-
-/* Estilos para los botones de redes sociales */
-.google,
-.apple,
-.facebook {
-  display: block;
-  padding: 10px 12px; /* Mantenemos el padding vertical y horizontal */
-  margin-top: 20px; /* Aumentamos el espacio entre los botones */
-  margin-bottom: 20px; /* Aumentamos el espacio entre los botones */
-  text-align: center;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 14px;
-  background-color: #f0f0f0;
-  color: #333;
-  transition: background-color 0.3s ease;
-  width: 100%; /* Hacemos los botones anchos */
-}
-
-/* Estilos específicos para cada botón de red social */
-.google {
-  border-bottom: 2px solid #db4a39; /* Línea inferior de color de Google */
-  background-color: #db4a39; /* Color de fondo de Google */
-  color: #fff; /* Color del texto */
-}
-
-.apple {
-  border-bottom: 2px solid #000000; /* Línea inferior de color de Apple */
-  background-color: #000000; /* Color de fondo de Apple */
-  color: #fff; /* Color del texto */
-}
-
-.facebook {
-  border-bottom: 2px solid #3b5998; /* Línea inferior de color de Facebook */
-  background-color: #3b5998; /* Color de fondo de Facebook */
-  color: #fff; /* Color del texto */
-}
-
-/* Estilos para los botones de navegación */
-.toggle-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #82C0CC; /* Color del botón */
-  color: #000000;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px; /* Espacio entre el botón de submit y este botón */
-  font-size: 16px; /* Tamaño de fuente */
-}
-
-.toggle-button:hover {
-  background-color: #69a7b0; /* Color al pasar el cursor */
-}
-
-/* Estilos específicos para el navbar */
-nav {
-  background-color: #489FB5;
-  overflow: hidden;
-}
-nav a {
-  float: left;
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 20px;
-  text-decoration: none;
-}
-nav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-.logo {
-  float: left;
-  display: block;
-  padding: 10px 20px;
-}
-.logo img {
-  height: 25px; /* Altura del logo ajustada */
-}
-
-
-/*home***************************************************************************/
-.inicioB {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f9; /* Color de fondo más claro */
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
-  background-color: #f8f9fa;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-  width: 60%;
-  min-width: 600px;
-  margin: 0 10%;
+  width: 100%;
+  max-width: 1400px; /* Aumenta el ancho máximo del contenedor */
+  padding: 250px;
+  display: flex; /* Alineación horizontal */
+  gap: 10px; /* Espacio entre el formulario y los botones de redes sociales */
 }
 
-header {
-  text-align: center;
-  padding: 20px;
-  background-color: f8f9fa;
-  margin-top: 40px;
-  border-radius: 10px;
+.form-container {
+  flex: 3; /* Ocupa más espacio disponible */
+  background: #ffffff; /* Color del formulario */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+  padding: 40px; /* Aumenta el padding interno */
+  max-width: 800px; /* Establece un ancho máximo */
+  width: 100%; /* Asegura que ocupe todo el espacio disponible */
 }
 
-header h1 {
-  color: black;
-  font-size: 24px;
-  margin-bottom: 15px;
-}
-
-header p {
-  color: #82C0CC;
-  font-size: 16px;
-  margin-top: 15px;
-}
-
-main {
-  padding: 20px;
+.registration-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-#intro, #services {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 40px;
+.form-group {
+  margin-bottom: 20px; /* Espacio entre campos */
+}
+
+input[type="text"],
+input[type="password"] {
   width: 100%;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.intro-text, .services-text {
-  flex: 1;
-  padding: 20px;
-  text-align: center;
-}
-
-.intro-text h2, .services-text h2 {
-  color: #82C0CC;
-  font-size: 18px;
-  margin-bottom: 15px;
-}
-
-.intro-text p, .services-text p {
-  color: #7f8c8d;
-  font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-
-.logo, #services img {
-  width: 200px;
-  height: auto;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #82C0CC;
-  color: black;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-top: 20px;
-  font-size: 16px;
-}
-
-footer {
-  display: flex;
-  justify-content: space-around;
-  background-color: #2c3e50;
-  color: white;
-  padding: 20px;
-  margin-top: 40px;
-  border-radius: 10px;
-}
-
-.footer-section {
-  width: 20%;
-  text-align: center;
-}
-
-.footer-section h3 {
-  border-bottom: 2px solid #16a085;
-  padding-bottom: 10px;
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-section ul li {
-  margin: 10px 0;
-}
-
-.footer-section a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.social-media img {
-  width: 24px;
-  margin-right: 10px;
-}
-
-.ad-space {
-  width: 10%;
-  min-width: 200px;
-  background-color: #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-}
-
-.left-ad {
-  left: 0;
-}
-
-.right-ad {
-  right: 0;
-}
-
-
-/*HUB******************************************************/
-.hub body {
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-.hub .container {
-  text-align: center;
-  max-width: 1200px;
-  width: 90%;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-}
-
-.hub .container:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.hub .title {
-  font-size: 2.5em;
-  margin-bottom: 30px;
-  color: #007bff;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.hub .section {
-  margin-bottom: 40px;
-}
-
-.hub .section-title {
-  font-size: 2em;
-  margin-bottom: 20px;
-  color: #6c757d;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.hub .images {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.hub .images img {
-  width: 180px;
-  height: 180px;
-  border-radius: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
-}
-
-.hub .images img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  border-color: #007bff;
-}
-
-
-/*Biblioteca de archivos*/
-
-.Biblioteca{
-  font-family: 'Roboto', sans-serif;
-    background-color: #ffffff;
-    margin: 0;
-    padding: 0;
-}
-
-
-.file-upload-page {
-  font-family: 'Roboto', sans-serif;
-  background-color: #ffffff;
-  margin: 0;
-  padding: 0;
-}
-
-.file-upload-page .file-upload-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background: #ffffff; /* Blanco hueso */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  text-align: center;
-  transition: all 0.3s ease-in-out;
-}
-
-.file-upload-page .file-upload-container:hover {
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.file-upload-page .file-upload-container h2 {
-  color: #333;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.file-upload-page .file-drop-zone {
-  margin: 20px 0;
-  padding: 40px;
-  border: 2px dashed #6ec1e4; /* Azul claro */
+  padding: 16px; /* Aumenta el padding interno de los campos */
+  margin-bottom: 20px; /* Espacio entre los campos */
+  border: 1px solid #dcdcdc;
   border-radius: 8px;
-  position: relative;
-  background-color: #eaf4ff;
-  transition: all 0.3s ease-in-out;
-}
-
-.file-upload-page .file-drop-zone:hover {
-  border-color: #449dab; /* Azul más oscuro */
-  background-color: #ffffff;
-}
-
-.file-upload-page .file-icon {
-  margin-bottom: 10px;
-}
-
-.file-upload-page .file-icon img {
-  width: 60px;
-}
-
-.file-upload-page .file-drop-zone p {
-  color: #333;
   font-size: 16px;
-  margin: 10px 0;
 }
 
-.file-upload-page .upload-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #6ec1e4; /* Azul claro */
-  color: white;
+button {
+  width: 100%;
+  padding: 16px; /* Aumenta el padding interno de los botones */
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 8px;
   font-size: 16px;
-  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.file-upload-page .upload-button:hover {
-  background-color: #449dab; /* Azul más oscuro */
+button:hover {
+  transform: translateY(-2px);
 }
 
-.file-upload-page .file-list {
-  text-align: left;
-  margin-top: 20px;
-  border-top: 1px solid #ffffff;
-  padding-top: 10px;
+.register-btn {
+  background-color: #007bff; /* Color azul más moderno */
+  color: #ffffff;
 }
 
-.file-upload-page .file-item {
+.login-btn {
+  background-color: #6c757d; /* Color gris para botón de inicio de sesión */
+  color: #ffffff;
+  margin-top: 10px; /* Espacio entre los botones */
+}
+
+.social-login {
+  flex: 1; /* Ocupa el espacio restante */
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #ffffff;
-  transition: all 0.3s ease-in-out;
+  flex-direction: column; /* Alinea los botones verticalmente */
+  gap: 15px; /* Espacio entre los botones de redes sociales */
 }
 
-.file-upload-page .file-item:hover {
-  background-color: #ffffff;
-}
-
-.file-upload-page .file-item span {
-  font-size: 16px;
-  color: #333;
-}
-
-.file-upload-page .delete-button {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
+.social-button {
+  padding: 14px; /* Aumenta el padding interno de los botones sociales */
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
   font-size: 14px;
-  transition: background-color 0.3s ease-in-out;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.file-upload-page .delete-button:hover {
-  background-color: #cc0000;
+.social-button:hover {
+  transform: translateY(-2px);
 }
 
+/* Colores específicos para cada red social */
+.google {
+  background-color: #db4a39; /* Color de fondo de Google */
+  border: 1px solid #db4a39; /* Borde del botón */
+}
+
+.apple {
+  background-color: #000000; /* Color de fondo de Apple */
+  border: 1px solid #000000; /* Borde del botón */
+}
+
+.facebook {
+  background-color: #3b5998; /* Color de fondo de Facebook */
+  border: 1px solid #3b5998; /* Borde del botón */
+}
