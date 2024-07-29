@@ -387,4 +387,126 @@ footer {
 }
 
 
-/***/
+/*Biblioteca de archivos*/
+
+.Biblioteca{
+  font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+
+.file-upload-page {
+  font-family: 'Roboto', sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+.file-upload-page .file-upload-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #ffffff; /* Blanco hueso */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.file-upload-page .file-upload-container:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.file-upload-page .file-upload-container h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.file-upload-page .file-drop-zone {
+  margin: 20px 0;
+  padding: 40px;
+  border: 2px dashed #6ec1e4; /* Azul claro */
+  border-radius: 8px;
+  position: relative;
+  background-color: #eaf4ff;
+  transition: all 0.3s ease-in-out;
+}
+
+.file-upload-page .file-drop-zone:hover {
+  border-color: #449dab; /* Azul más oscuro */
+  background-color: #ffffff;
+}
+
+.file-upload-page .file-icon {
+  margin-bottom: 10px;
+}
+
+.file-upload-page .file-icon img {
+  width: 60px;
+}
+
+.file-upload-page .file-drop-zone p {
+  color: #333;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.file-upload-page .upload-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #6ec1e4; /* Azul claro */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.file-upload-page .upload-button:hover {
+  background-color: #449dab; /* Azul más oscuro */
+}
+
+.file-upload-page .file-list {
+  text-align: left;
+  margin-top: 20px;
+  border-top: 1px solid #ffffff;
+  padding-top: 10px;
+}
+
+.file-upload-page .file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+.file-upload-page .file-item:hover {
+  background-color: #ffffff;
+}
+
+.file-upload-page .file-item span {
+  font-size: 16px;
+  color: #333;
+}
+
+.file-upload-page .delete-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.file-upload-page .delete-button:hover {
+  background-color: #cc0000;
+}
+
