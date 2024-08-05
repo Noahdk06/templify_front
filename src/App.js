@@ -1,9 +1,11 @@
 import React from 'react';
 import './App.css';
+import renderNavbar from './navbar'
 
 function App() {
   return (
     <div className="container">
+      <renderNavbar/>
       <div className="form-container">
         <form className="registration-form">
           <div className="form-group">
