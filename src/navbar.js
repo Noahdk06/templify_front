@@ -1,5 +1,5 @@
 // navbar.js
-export function renderNavbar() {
+export default function RenderNavbar() {
     // Crear y agregar el enlace al archivo CSS
     const link = document.createElement('link');
     link.rel = 'stylesheet';
