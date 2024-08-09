@@ -1,14 +1,14 @@
+// src/home.js
 import React from 'react';
-import './App.css';
-import introImage from './Captura_de_pantalla_2024-06-24_082542-removebg-preview.png';
-import teamImage from './fotoequipo.jfif';
+import './Home.css';
+import Navbar from './navbar.js'; // Verifica el nombre del archivo y la ruta
+
 
 const Home = () => {
-
-function App() {
   return (
     <div className="inicioB">
       <div className="container">
+        <Navbar />
         <Header />
         <Main />
       </div>
@@ -16,27 +16,27 @@ function App() {
       <AdSpace position="right-ad" />
     </div>
   );
-}
+};
 
-function Header() {
+const Header = () => {
   return (
     <header>
       <h1>CON TEMPLIFY, TU PUBLICIDAD INTERACTÚA CON EL FUTURO</h1>
       <p>Bienvenido a Templify, el servicio de cartelería digital más user friendly en el mercado.</p>
     </header>
   );
-}
+};
 
-function Main() {
+const Main = () => {
   return (
     <main>
       <Intro />
       <Services />
     </main>
   );
-}
+};
 
-function Intro() {
+const Intro = () => {
   return (
     <section id="intro">
       <div className="intro-text">
@@ -49,15 +49,14 @@ function Intro() {
         </p>
         <a href="#" className="btn">Ir a TemplateHUB &gt;</a>
       </div>
-      <img src={introImage} alt="Templify Logo" className="logo" />
+     
     </section>
   );
-}
+};
 
-function Services() {
+const Services = () => {
   return (
     <section id="services">
-      <img src={teamImage} alt="Team working" />
       <div className="services-text">
         <h2>¿QUÉ SERVICIOS OFRECEMOS A NUESTROS CLIENTES?</h2>
         <p>
@@ -72,17 +71,14 @@ function Services() {
       </div>
     </section>
   );
-}
+};
 
-function AdSpace({ position }) {
+const AdSpace = ({ position }) => {
   return (
     <div className={`ad-space ${position}`}>
       {/* Aquí puedes agregar el contenido del anuncio */}
     </div>
   );
-}
-}
+};
+
 export default Home;
-
-
-

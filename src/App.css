@@ -1,30 +1,133 @@
+/* App.css */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f9; /* Color de fondo más claro */
+  background-color: #f4f4f9;
   margin: 0;
   padding: 0;
+}
+
+.inicioB {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .container {
-  width: 100%;
-  max-width: 1400px; /* Aumenta el ancho máximo del contenedor */
-  padding: 250px;
-  display: flex; /* Alineación horizontal */
-  gap: 10px; /* Espacio entre el formulario y los botones de redes sociales */
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
+/* Estilos para el Header */
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+header p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Estilos para el Main */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#intro {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.intro-text {
+  flex: 1;
+}
+
+.intro-text h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.intro-text p {
+  font-size: 16px;
+  color: #666;
+}
+
+.intro-text .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+#services {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#services img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+.services-text {
+  flex: 1;
+}
+
+.services-text h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.services-text p {
+  font-size: 16px;
+  color: #666;
+}
+
+.services-text .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+/* Estilos para el espacio de anuncios */
+.ad-space {
+  background-color: #e0e0e0;
+  flex: 1;
+}
+
+.ad-space.left-ad {
+  margin-right: 10px;
+}
+
+.ad-space.right-ad {
+  margin-left: 10px;
+}
+
+/* Estilos para el formulario y botones */
 .form-container {
-  flex: 3; /* Ocupa más espacio disponible */
-  background: #ffffff; /* Color del formulario */
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
-  padding: 40px; /* Aumenta el padding interno */
-  max-width: 800px; /* Establece un ancho máximo */
-  width: 100%; /* Asegura que ocupe todo el espacio disponible */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  max-width: 800px;
+  width: 100%;
 }
 
 .registration-form {
@@ -33,14 +136,14 @@ body {
 }
 
 .form-group {
-  margin-bottom: 20px; /* Espacio entre campos */
+  margin-bottom: 20px;
 }
 
 input[type="text"],
 input[type="password"] {
   width: 100%;
-  padding: 16px; /* Aumenta el padding interno de los campos */
-  margin-bottom: 20px; /* Espacio entre los campos */
+  padding: 16px;
+  margin-bottom: 20px;
   border: 1px solid #dcdcdc;
   border-radius: 8px;
   font-size: 16px;
@@ -48,7 +151,7 @@ input[type="password"] {
 
 button {
   width: 100%;
-  padding: 16px; /* Aumenta el padding interno de los botones */
+  padding: 16px;
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -61,25 +164,24 @@ button:hover {
 }
 
 .register-btn {
-  background-color: #007bff; /* Color azul más moderno */
+  background-color: #007bff;
   color: #ffffff;
 }
 
 .login-btn {
-  background-color: #6c757d; /* Color gris para botón de inicio de sesión */
+  background-color: #6c757d;
   color: #ffffff;
-  margin-top: 10px; /* Espacio entre los botones */
+  margin-top: 10px;
 }
 
 .social-login {
-  flex: 1; /* Ocupa el espacio restante */
   display: flex;
-  flex-direction: column; /* Alinea los botones verticalmente */
-  gap: 15px; /* Espacio entre los botones de redes sociales */
+  flex-direction: column;
+  gap: 15px;
 }
 
 .social-button {
-  padding: 14px; /* Aumenta el padding interno de los botones sociales */
+  padding: 14px;
   text-align: center;
   text-decoration: none;
   border-radius: 8px;
@@ -95,16 +197,113 @@ button:hover {
 
 /* Colores específicos para cada red social */
 .google {
-  background-color: #db4a39; /* Color de fondo de Google */
-  border: 1px solid #db4a39; /* Borde del botón */
+  background-color: #db4a39;
+  border: 1px solid #db4a39;
 }
 
 .apple {
-  background-color: #000000; /* Color de fondo de Apple */
-  border: 1px solid #000000; /* Borde del botón */
+  background-color: #000000;
+  border: 1px solid #000000;
 }
 
 .facebook {
-  background-color: #3b5998; /* Color de fondo de Facebook */
-  border: 1px solid #3b5998; /* Borde del botón */
+  background-color: #3b5998;
+  border: 1px solid #3b5998;
 }
+
+
+/* src/hub.css */
+.hub {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.images img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.templates-hub {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.templates-header {
+  background-color: #f5f5f5;
+  padding: 20px;
+  text-align: center;
+}
+
+.templates-main {
+  padding: 20px;
+}
+
+.templates-section {
+  margin-bottom: 20px;
+}
+
+.templates-section h2 {
+  margin-bottom: 10px;
+}
+
+.templates-section p {
+  margin: 0;
+}
+
+.support, .plans {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.support-header, .plans-header {
+  background-color: #f5f5f5;
+  padding: 20px;
+  text-align: center;
+}
+
+.support-main, .plans-main {
+  padding: 20px;
+}
+
+.support-section, .plans-section {
+  margin-bottom: 20px;
+}
+
+.support-section h2, .plans-section h2 {
+  margin-bottom: 10px;
+}
+
+.support-section p, .plans-section p {
+  margin: 0;
+}
+
+
+/* Agrega más estilos según sea necesario */

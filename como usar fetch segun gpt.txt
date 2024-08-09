@@ -48,3 +48,6 @@ Manejo de Errores: Siempre es buena práctica manejar posibles errores en las pr
 Consideraciones de Seguridad: Asegúrate de manejar la seguridad en tu backend para proteger contra ataques como CSRF (Cross-Site Request Forgery) y XSS (Cross-Site Scripting).
 
 Al seguir estos pasos básicos, puedes conectar tu frontend con tu backend utilizando fetch en JavaScript de manera efectiva. Asegúrate de ajustar los detalles según las necesidades específicas de tu aplicación y tu backend.
+
+
+#6192c7
