@@ -1,11 +1,11 @@
 import React from 'react';
 import './Templatehub.css'; // Asegúrate de que el archivo CSS esté en la misma carpeta
-import Navbar from './navbar.js'; // Verifica el nombre del archivo y la ruta
+ // Verifica el nombre del archivo y la ruta
 
 const TemplatesHub = () => {
   return (
     <div className="templates-hub">
-      <Navbar />
+
       <Header />
       <Main />
     </div>

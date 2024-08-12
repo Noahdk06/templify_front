@@ -1,14 +1,14 @@
 // src/home.js
 import React from 'react';
 import './Home.css';
-import Navbar from './navbar.js'; // Verifica el nombre del archivo y la ruta
+
 
 
 const Home = () => {
   return (
     <div className="inicioB">
       <div className="container">
-        <Navbar />
+
         <Header />
         <Main />
       </div>

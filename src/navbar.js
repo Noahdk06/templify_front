@@ -13,6 +13,7 @@ const Navbar = () => {
         <Link to="/templates">Templates Hub</Link>
         <Link to="/support">Soporte Técnico</Link>
         <Link to="/plans">Nuestros Planes</Link>
+        <Link to="/bibliotecadearchivos">Biblioteca de Archivos</Link>
       </div>
       <div className="auth-buttons">
         <Link to="/login" className="login-btn">Iniciar Sesión</Link>

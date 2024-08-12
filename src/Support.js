@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css'; // Asegúrate de que el archivo CSS esté en la misma carpeta
-import Navbar from './navbar.js'; // Verifica el nombre del archivo y la ruta
+  // Verifica el nombre del archivo y la ruta
 
 const Support = () => {
   return (
     <div className="support">
-      <Navbar />
+
       <Header />
       <Main />
     </div>
