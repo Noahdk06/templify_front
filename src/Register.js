@@ -1,13 +1,23 @@
-// src/Register.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './Register.css'; // Asegúrate de tener un archivo CSS para estilizar el componente
+import { Link, useNavigate } from 'react-router-dom';
+import './Register.css';
 
-const Register = () => {
+const Register = ({ setIsLoggedIn }) => {
+  const navigate = useNavigate();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // Aquí podrías agregar la lógica de registro
+
+    // Cambia el estado de autenticación y redirige al usuario a la página de inicio
+    setIsLoggedIn(true);
+    navigate('/');
+  };
+
   return (
     <div className="register-container">
       <h2>Registro</h2>
-      <form className="register-form">
+      <form className="register-form" onSubmit={handleRegister}>
         <div className="form-group">
           <label htmlFor="firstName">Nombre</label>
           <input type="text" id="firstName" name="firstName" required />

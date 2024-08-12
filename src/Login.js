@@ -2,14 +2,15 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
     // Aquí podrías agregar la lógica de autenticación
 
-    // Redirige al usuario a la página de inicio después del login
+    // Cambia el estado de autenticación y redirige al usuario a la página de inicio
+    setIsLoggedIn(true);
     navigate('/');
   };
 
