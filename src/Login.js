@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
+const BACKEND_URL = 'http://localhost:3033';
+
 const Login = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Aquí podrías agregar la lógica de autenticación
-
-    // Redirige al usuario a la página de inicio después del login
-    navigate('/');
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/user/login`, { username, password });
+      if (response.data.success) {
+        // Guardar el token en el almacenamiento local o manejarlo según necesites
+        localStorage.setItem('token', response.data.token);
+        // Redirige al usuario a la página de inicio después del login
+        navigate('/');
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error durante el login:', error);
+      setError('Error interno del servidor');
+    }
   };
 
   return (
@@ -19,12 +35,27 @@ const Login = () => {
       <form className="login-form" onSubmit={handleLogin}>
         <div className="form-group">
           <label htmlFor="username">Usuario</label>
-          <input type="text" id="username" name="username" required />
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
         <div className="form-group">
           <label htmlFor="password">Contraseña</label>
-          <input type="password" id="password" name="password" required />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit" className="submit-button">Iniciar Sesión</button>
       </form>
       <div className="social-buttons">

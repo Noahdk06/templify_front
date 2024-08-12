@@ -1,6 +1,7 @@
 // src/App.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import axios from 'axios'
 import './App.css';
 import Home from './home';
 import Login from './Login';
@@ -13,7 +14,21 @@ import Navbar from './navbar';
 import Profile from './Profile';
 import Template from './Template'; // Componente para mostrar un template individual
 
+const BACKEND_URL = 'http://localhost:3033'
+
 function App() {
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    axios.get(`${BACKEND_URL}/api/data`)
+      .then(response => {
+        setData(response.data.message);
+      })
+      .catch(error => {
+        console.error('Error al conectar con el back', error);
+      });
+  }, []);
+  
   return (
     <Router>
       <div className="App">
