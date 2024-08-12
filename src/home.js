@@ -49,7 +49,7 @@ const Intro = () => {
         </p>
         <a href="#" className="btn">Ir a TemplateHUB &gt;</a>
       </div>
-     
+      <img src='/img/logo.png' alt="Logo" />
     </section>
   );
 };
