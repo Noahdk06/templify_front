@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './navbar.css'; // Asegúrate de que la ruta sea correcta
+import './navbar.css';
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Cambia este valor para probar
+
   return (
     <nav className="navbar">
       <Link to="/" className="logo">
@@ -16,8 +18,17 @@ const Navbar = () => {
         <Link to="/bibliotecadearchivos">Biblioteca de Archivos</Link>
       </div>
       <div className="auth-buttons">
-        <Link to="/login" className="login-btn">Iniciar Sesión</Link>
-        <Link to="/register" className="register-btn">Registrarse</Link>
+        {isLoggedIn ? (
+          <>
+            <Link to="/profile" className="profile-btn">Mi Perfil</Link>
+            <button onClick={() => setIsLoggedIn(false)} className="logout-btn">Cerrar Sesión</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="login-btn">Iniciar Sesión</Link>
+            <Link to="/register" className="register-btn">Registrarse</Link>
+          </>
+        )}
       </div>
     </nav>
   );

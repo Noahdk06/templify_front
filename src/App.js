@@ -1,3 +1,4 @@
+// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
@@ -8,13 +9,15 @@ import TemplatesHub from './TemplateHub';
 import Support from './Support';
 import Plans from './Plans';
 import BibliotecaDeArchivos from './bibliotecadearchivos';
-import Navbar from './navbar'; // Importa la Navbar
+import Navbar from './navbar';
+import Profile from './Profile';
+import Template from './Template'; // Componente para mostrar un template individual
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar /> {/* La Navbar se renderiza aquí, fuera del componente Routes */}
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -23,6 +26,8 @@ function App() {
           <Route path="/support" element={<Support />} />
           <Route path="/plans" element={<Plans />} />
           <Route path="/bibliotecadearchivos" element={<BibliotecaDeArchivos />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/template/:id" element={<Template />} /> {/* Ruta dinámica para templates */}
         </Routes>
       </div>
     </Router>
