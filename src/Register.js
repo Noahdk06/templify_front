@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Register.css'; 
+import './Register.css'; // Asegúrate de tener un archivo CSS para estilizar el componente
 
 const BACKEND_URL = 'http://localhost:3033';
 
@@ -28,7 +28,7 @@ const Register = () => {
       });
       if (response.status === 201) {
         setSuccessMessage('Registro exitoso. Puedes iniciar sesión ahora.');
-  
+        // Redirige al usuario a la página de login, si es necesario
       }
     } catch (error) {
       console.error('Error durante el registro:', error);
