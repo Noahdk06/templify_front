@@ -1,0 +1,148 @@
+/* Contenedor principal de la página de perfil */
+.profile-container {
+    display: flex;
+    padding: 30px;
+    background-color: #f4f6f9; /* Fondo suave */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para mayor profundidad */
+  }
+  
+  /* Barra lateral del perfil */
+  .profile-sidebar {
+    width: 250px;
+    padding-right: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .profile-avatar {
+    width: 80%;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+  .profile-sidebar h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .profile-sidebar p {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .subscription-info {
+    color: #28a745; /* Verde para resaltar la información del plan */
+    font-weight: bold;
+  }
+  
+  .delete-user-button {
+    margin-top: 20px;
+    padding: 8px 16px;
+    background-color: #dc3545; /* Rojo para indicar acción crítica */
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+  }
+  
+  .delete-user-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Detalles del perfil */
+  .profile-details {
+    flex-grow: 1;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  /* Fila de información y botón de editar */
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .info-text p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  /* Botón de editar */
+  .edit-button {
+    padding: 6px 12px;
+    background-color: #007bff; /* Azul clásico */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Galería de templates */
+  .templates-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .templates-gallery img {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .templates-gallery img:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Estilo para encabezados */
+  h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .profile-container {
+      flex-direction: column;
+    }
+  
+    .info-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .edit-button {
+      margin-top: 10px;
+      align-self: flex-end;
+    }
+  
+    .templates-gallery {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+  }
+  

@@ -1,13 +1,22 @@
-// src/Login.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css'; // Asegúrate de tener un archivo CSS para estilizar el componente
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Aquí podrías agregar la lógica de autenticación
+
+    // Redirige al usuario a la página de inicio después del login
+    navigate('/');
+  };
+
   return (
     <div className="login-container">
       <h2>Iniciar Sesión</h2>
-      <form className="login-form">
+      <form className="login-form" onSubmit={handleLogin}>
         <div className="form-group">
           <label htmlFor="username">Usuario</label>
           <input type="text" id="username" name="username" required />
