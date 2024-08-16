@@ -12,8 +12,6 @@ const Home = () => {
         <Header />
         <Main />
       </div>
-      <AdSpace position="left-ad" />
-      <AdSpace position="right-ad" />
     </div>
   );
 };
@@ -70,14 +68,6 @@ const Services = () => {
         <a href="#" className="btn">Empieza hoy!!!</a>
       </div>
     </section>
-  );
-};
-
-const AdSpace = ({ position }) => {
-  return (
-    <div className={`ad-space ${position}`}>
-      {/* Aquí puedes agregar el contenido del anuncio */}
-    </div>
   );
 };
 
