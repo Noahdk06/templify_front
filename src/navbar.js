@@ -30,7 +30,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             </>
           ) : (
             <>
-              <Link to="/login" className="login-btn">Iniciar Sesión</Link>
+              <Link to="/login" className="login-btn">Log in</Link>
               <Link to="/register" className="register-btn">Registrarse</Link>
             </>
           )}

@@ -2,7 +2,7 @@
 .navbar {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px 20px;
     background-color: #ffffff;
     color: #333;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -76,8 +76,8 @@
 .auth-buttons a,
 .auth-buttons button {
     text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 25px;
+    padding: 20px 20px;
+    border-radius: 30px;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -93,13 +93,14 @@
 }
 
 .login-btn:hover {
-    background-color: #0056b3;
+    background-color: #ffffff;
+    color: #007bff;
     transform: scale(1.05);
 }
 
 /* Estilo para el botón de registrarse */
 .register-btn {
-    background-color: #e9ecef;
+    background-color: #ffffff;
     color: #007bff;
     border: 1px solid #007bff;
 }
@@ -178,7 +179,7 @@
     }
 
     .nav-links {
-        display: flex; /* Muestra los enlaces de navegación en pantallas grandeasdsa */
+        display: flex; /* Muestra los enlaces de navegación en pantallas grandesa */
         flex-direction: row;
     }
 
