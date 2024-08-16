@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './bibliotecadearchivos.css';
+
+const BACKEND_URL = 'http://localhost:3033';
 
 const BibliotecaDeArchivos = () => {
   const [showUploadForm, setShowUploadForm] = useState(false);
@@ -19,19 +22,44 @@ const BibliotecaDeArchivos = () => {
     setFileFormat('');
   };
 
-  const handleFileSubmit = (e) => {
+  const handleFileSubmit = async (e) => {
     e.preventDefault();
-    if (fileName && fileType && fileFormat) {
+
+    // Crear un objeto FormData para enviar el archivo y sus detalles
+    const formData = new FormData();
+    formData.append('file', e.target.elements.file.files[0]);  // Asumiendo que el input file tiene el nombre 'file'
+    formData.append('bucketName', 'tu-bucket');  // Cambia 'tu-bucket' por el nombre real del bucket
+    formData.append('key', fileName);  // Nombre del archivo
+    formData.append('contentType', fileType);  // Tipo de contenido del archivo
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/user/cargarArchivos`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       setFileList([...fileList, { name: fileName, type: fileType, format: fileFormat }]);
       setShowUploadForm(false);
       setFileName('');
       setFileType('');
       setFileFormat('');
+    } catch (error) {
+      console.error('Error al cargar el archivo:', error);
     }
   };
 
-  const handleDelete = (fileToDelete) => {
-    setFileList(fileList.filter(file => file !== fileToDelete));
+  const handleDelete = async (fileToDelete) => {
+    try {
+      await axios.post(`${BACKEND_URL}/api/user/eliminarArchivos`, {
+        bucketName: 'tu-bucket',  // Cambia 'tu-bucket' por el nombre real del bucket
+        key: fileToDelete.name,  // Nombre del archivo a eliminar
+      });
+
+      setFileList(fileList.filter(file => file !== fileToDelete));
+    } catch (error) {
+      console.error('Error al eliminar el archivo:', error);
+    }
   };
 
   return (

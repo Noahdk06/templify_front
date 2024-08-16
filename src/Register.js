@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Register.css'; // Asegúrate de tener un archivo CSS para estilizar el componente
+import './Register.css'; 
 
 const BACKEND_URL = 'http://localhost:3033';
 
 const Register = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [company, setCompany] = useState('');
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: '',
+    username: '',
+    password: '',
+    mail: '',
+    empresa: ''
+  });
+
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -19,16 +22,17 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BACKEND_URL}/api/user/register`, {
-        nombre: firstName,
-        apellido: lastName,
-        username,
-        password,
-        mail: email,
-        empresa: company
+        nombre: formData.nombre,
+        apellido: formData.apellido,
+        username: formData.username,
+        password: formData.password,
+        mail: formData.mail,
+        empresa: formData.empresa
       });
       if (response.status === 201) {
         setSuccessMessage('Registro exitoso. Puedes iniciar sesión ahora.');
-        // Redirige al usuario a la página de login, si es necesario
+        // Opcionalmente, redirige al usuario a la página de login
+        // navigate('/login');
       }
     } catch (error) {
       console.error('Error durante el registro:', error);
@@ -36,29 +40,36 @@ const Register = () => {
     }
   };
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   return (
     <div className="register-container">
       <h2>Registro</h2>
       <form className="register-form" onSubmit={handleRegister}>
         <div className="form-group">
-          <label htmlFor="firstName">Nombre</label>
+          <label htmlFor="nombre">Nombre</label>
           <input
             type="text"
-            id="firstName"
-            name="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            id="nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">Apellido</label>
+          <label htmlFor="apellido">Apellido</label>
           <input
             type="text"
-            id="lastName"
-            name="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            id="apellido"
+            name="apellido"
+            value={formData.apellido}
+            onChange={handleChange}
             required
           />
         </div>
@@ -68,8 +79,8 @@ const Register = () => {
             type="text"
             id="username"
             name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={formData.username}
+            onChange={handleChange}
             required
           />
         </div>
@@ -79,30 +90,30 @@ const Register = () => {
             type="password"
             id="password"
             name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Correo Electrónico</label>
+          <label htmlFor="mail">Correo Electrónico</label>
           <input
             type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="mail"
+            name="mail"
+            value={formData.mail}
+            onChange={handleChange}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="company">Empresa (opcional)</label>
+          <label htmlFor="empresa">Empresa (opcional)</label>
           <input
             type="text"
-            id="company"
-            name="company"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
+            id="empresa"
+            name="empresa"
+            value={formData.empresa}
+            onChange={handleChange}
           />
         </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}

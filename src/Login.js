@@ -14,14 +14,12 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/user/login`, { username, password });
+      const response = await axios.post(`${BACKEND_URL}/login`, { username, password });
       if (response.data.success) {
-        // Guardar el token en el almacenamiento local o manejarlo según necesites
         localStorage.setItem('token', response.data.token);
-        // Redirige al usuario a la página de inicio después del login
-        navigate('/');
+        navigate('/');  // Redirige al usuario a la página de inicio
       } else {
-        setError(response.data.message);
+        setError(response.data.message);  // Muestra el mensaje de error del backend
       }
     } catch (error) {
       console.error('Error durante el login:', error);
