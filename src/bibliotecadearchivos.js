@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './bibliotecadearchivos.css';
 
@@ -10,6 +10,19 @@ const BibliotecaDeArchivos = () => {
   const [fileType, setFileType] = useState('');
   const [fileFormat, setFileFormat] = useState('');
   const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    // Cargar archivos existentes al montar el componente
+    const fetchFiles = async () => {
+      try {
+        const result = await axios.get(`${BACKEND_URL}/api/user/listarArchivos`);
+        setFileList(result.data.files);
+      } catch (error) {
+        console.error('Error al cargar archivos:', error);
+      }
+    };
+    fetchFiles();
+  }, []);
 
   const handleFileUploadClick = () => {
     setShowUploadForm(true);
@@ -27,10 +40,16 @@ const BibliotecaDeArchivos = () => {
 
     // Crear un objeto FormData para enviar el archivo y sus detalles
     const formData = new FormData();
-    formData.append('file', e.target.elements.file.files[0]);  // Asumiendo que el input file tiene el nombre 'file'
-    formData.append('bucketName', 'tu-bucket');  // Cambia 'tu-bucket' por el nombre real del bucket
-    formData.append('key', fileName);  // Nombre del archivo
-    formData.append('contentType', fileType);  // Tipo de contenido del archivo
+    const fileInput = e.target.elements.file.files[0];
+    
+    if (!fileInput) {
+      console.error('No se seleccionó ningún archivo.');
+      return;
+    }
+
+    formData.append('file', fileInput);
+    formData.append('key', fileName); // Nombre del archivo
+    formData.append('contentType', fileType); // Tipo de contenido del archivo
 
     try {
       const response = await axios.post(`${BACKEND_URL}/api/user/cargarArchivos`, formData, {
@@ -39,6 +58,9 @@ const BibliotecaDeArchivos = () => {
         },
       });
 
+      console.log('Archivo subido:', response.data);
+      
+      // Actualizar la lista de archivos
       setFileList([...fileList, { name: fileName, type: fileType, format: fileFormat }]);
       setShowUploadForm(false);
       setFileName('');
@@ -52,8 +74,7 @@ const BibliotecaDeArchivos = () => {
   const handleDelete = async (fileToDelete) => {
     try {
       await axios.post(`${BACKEND_URL}/api/user/eliminarArchivos`, {
-        bucketName: 'tu-bucket',  // Cambia 'tu-bucket' por el nombre real del bucket
-        key: fileToDelete.name,  // Nombre del archivo a eliminar
+        key: fileToDelete.name, // Nombre del archivo a eliminar
       });
 
       setFileList(fileList.filter(file => file !== fileToDelete));
@@ -114,7 +135,8 @@ const BibliotecaDeArchivos = () => {
               Archivo:
               <input
                 type="file"
-                onChange={(e) => setFileType(e.target.files[0].type)}
+                name="file"
+                onChange={(e) => setFileType(e.target.files[0]?.type)}
                 required
               />
             </label>

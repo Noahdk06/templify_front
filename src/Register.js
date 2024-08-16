@@ -1,38 +1,33 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import './Register.css'; 
+import { Link, useNavigate } from 'react-router-dom';
+import './Register.css';
 
 const BACKEND_URL = 'http://localhost:3033';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
     username: '',
     password: '',
     mail: '',
-    empresa: ''
+    empresa: '',
   });
-
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/user/register`, {
-        nombre: formData.nombre,
-        apellido: formData.apellido,
-        username: formData.username,
-        password: formData.password,
-        mail: formData.mail,
-        empresa: formData.empresa
-      });
+      const response = await axios.post(`${BACKEND_URL}/api/user/register`, formData);
       if (response.status === 201) {
         setSuccessMessage('Registro exitoso. Puedes iniciar sesión ahora.');
-        // Opcionalmente, redirige al usuario a la página de login
-        // navigate('/login');
+        // Redirigir al usuario a la página de inicio de sesión
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000); // Opcional: tiempo para mostrar el mensaje de éxito antes de redirigir
       }
     } catch (error) {
       console.error('Error durante el registro:', error);
@@ -43,7 +38,7 @@ const Register = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 

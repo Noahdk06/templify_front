@@ -5,7 +5,7 @@ import './Login.css';
 
 const BACKEND_URL = 'http://localhost:3033';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,12 +14,12 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${BACKEND_URL}/login`, { username, password });
+      const response = await axios.post(`${BACKEND_URL}/api/user/login`, { username, password });
       if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
-        navigate('/');  // Redirige al usuario a la página de inicio
+        setIsLoggedIn(true); // Actualiza el estado de autenticación
+        navigate('/');
       } else {
-        setError(response.data.message);  // Muestra el mensaje de error del backend
+        setError(response.data.message);
       }
     } catch (error) {
       console.error('Error durante el login:', error);

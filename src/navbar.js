@@ -5,7 +5,6 @@ import './navbar.css';
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <nav className="navbar">
-      
       <Link to="/" className="logo">
         <img alt="Logo" src='../src/img/logo.png' />
       </Link>
