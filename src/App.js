@@ -11,7 +11,7 @@ import Plans from './Plans';
 import BibliotecaDeArchivos from './bibliotecadearchivos';
 import Navbar from './navbar';
 import Profile from './Profile';
-import Template from './Template'; // Componente para mostrar un template individual
+import Template from './Template'; 
 
 const BACKEND_URL = 'http://localhost:3033'
 
