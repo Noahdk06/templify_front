@@ -7,7 +7,7 @@ import Login from './Login';
 import Register from './Register';
 import TemplatesHub from './TemplateHub';
 import Support from './Support';
-import Plans from './Plans';
+import plans from './Plans';
 import BibliotecaDeArchivos from './bibliotecadearchivos';
 import Navbar from './navbar';
 import Profile from './Profile';
@@ -50,7 +50,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/templates" element={<TemplatesHub />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/plans" element={<Plans />} />
+          <Route path="/plans" element={<plans />} />
           <Route path="/bibliotecadearchivos" element={<BibliotecaDeArchivos />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/template/:id" element={<Template />} />

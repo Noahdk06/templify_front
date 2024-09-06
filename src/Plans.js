@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css'; // Asegúrate de que el archivo CSS esté en la misma carpeta
   // Verifica el nombre del archivo y la ruta
 
-const Plans = () => {
+const plans = () => {
   return (
     <div className="plans">
 
@@ -49,4 +49,4 @@ const Section = ({ title, children }) => {
   );
 };
 
-export default Plans;
+export default plans;
