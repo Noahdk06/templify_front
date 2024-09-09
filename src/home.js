@@ -65,7 +65,9 @@ const Services = () => {
           que tus datos y templates estén siempre accesibles y protegidos. Una vez que hayas finalizado tu diseño, podrás descargar la aplicación 
           y utilizarla en dispositivos físicos, como tótems interactivos, para una experiencia de usuario completa y dinámica.
         </p>
-        <a href="#" className="btn">Empieza hoy!!!</a>
+        <a href="/pdepago" className="btn">Empieza hoy!!!</a>
+
+        
       </div>
     </section>
   );

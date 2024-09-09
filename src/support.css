@@ -1,0 +1,124 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .support-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #70CAD1;
+    color: white;
+  }
+  
+  .navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    list-style: none;
+  }
+  
+  .navbar-menu li {
+    margin: 0 15px;
+  }
+  
+  .navbar-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  .navbar-profile img {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+  }
+  
+  /* Support Options Styles */
+  .support-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0;
+  }
+  
+  .option-cards {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+  }
+  
+  .option-card {
+    border: 1px solid black;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    background-color: #F8F8F8;
+  }
+  
+  .option-card h3 {
+    margin-bottom: 10px;
+  }
+  
+  .option-card p {
+    margin-bottom: 20px;
+  }
+  
+  .option-card button {
+    padding: 10px;
+    background-color: #E0F7FA;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .option-card button:hover {
+    background-color: #B2EBF2;
+  }
+  
+  /* Footer Styles */
+  .footer {
+    width: 100%;
+    background-color: #1A1A1A;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+  }
+  
+  .footer-section h4 {
+    margin-bottom: 15px;
+  }
+  
+  .footer-section p {
+    margin: 5px 0;
+  }
+  
+  .company-logos img {
+    width: 50px;
+    margin-right: 10px;
+  }
+  
+  .footer-contact p {
+    margin: 5px 0;
+  }
+  
+  .social-icons img {
+    width: 30px;
+    margin-right: 10px;
+  }
+  

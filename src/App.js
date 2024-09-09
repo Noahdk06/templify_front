@@ -7,17 +7,18 @@ import Login from './Login';
 import Register from './Register';
 import TemplatesHub from './TemplateHub';
 import Support from './Support';
-import plans from './Plans';
+import Plans from './Plans'; // Asegúrate de que este componente se llama "Plans"
 import BibliotecaDeArchivos from './bibliotecadearchivos';
 import Navbar from './navbar';
 import Profile from './Profile';
 import Template from './Template';
+import Pdepagos from './pdepagos'; // Importa el componente correctamente
 
 const BACKEND_URL = 'http://localhost:3033';
 
 function App() {
   const [data, setData] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para gestionar la autenticación
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     axios.get(`${BACKEND_URL}/api/data`)
@@ -29,15 +30,12 @@ function App() {
       });
   }, []);
 
-  // Función para manejar el inicio de sesión
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
 
-  // Función para manejar el cierre de sesión
   const handleLogout = () => {
     setIsLoggedIn(false);
-    // Puedes limpiar el token o cualquier otro dato relacionado con la sesión aquí
   };
 
   return (
@@ -50,10 +48,11 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/templates" element={<TemplatesHub />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/plans" element={<plans />} />
+          <Route path="/plans" element={<Plans />} /> {/* Cambiado a "Plans" */}
           <Route path="/bibliotecadearchivos" element={<BibliotecaDeArchivos />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/template/:id" element={<Template />} />
+          <Route path="/pdepago" element={<Pdepagos />} /> {/* Añadido para Pdepagos */}
         </Routes>
       </div>
     </Router>

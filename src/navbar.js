@@ -21,7 +21,6 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         <Link to="/support">Soporte Técnico</Link>
         <Link to="/plans">Nuestros Planes</Link>
         <Link to="/bibliotecadearchivos">Biblioteca de Archivos</Link>
-        <Link to="/pdepagos">plan de pagos</Link>
       </div>
       <div className="auth-buttons">
         {isLoggedIn ? (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './pdepagos.css';
 
-const pdepagos = () => {
+const Pdepagos = () => {
   const [selectedDuration, setSelectedDuration] = useState('3 Meses');
 
   const handleDurationChange = (duration) => {
@@ -10,17 +10,7 @@ const pdepagos = () => {
 
   return (
     <div className="pdepagos-container">
-      <header>
-        <nav>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">¿Qué Hacemos?</a></li>
-            <li><a href="#">Template Hub</a></li>
-            <li><a href="#">Soporte Técnico</a></li>
-            <li><a href="#">Nuestros Planes</a></li>
-          </ul>
-        </nav>
-      </header>
+
 
       <section className="pricing-section">
         <h1>ELIJE TU PLAN PERFECTO PARA <span>INTERACTUAR CON EL FUTURO</span></h1>
@@ -87,24 +77,9 @@ const pdepagos = () => {
         </div>
       </section>
 
-      <footer className="footer-section">
-        <div className="footer-content">
-          <div className="footer-links">
-            <h3>INICIATE</h3>
-            <h3>EDUCACION</h3>
-          </div>
-          <div className="trusted-companies">
-            <h3>EMPRESAS QUE CONFIARON EN NOSOTROS</h3>
-            {/* Añade los logos aquí */}
-          </div>
-          <div className="contact-info">
-            <p>CONTACTO: +54 (911) 2682 9703</p>
-            <p>santholia252@gmail.com</p>
-          </div>
-        </div>
-      </footer>
+     
     </div>
   );
 };
 
-export default pdepagos;
+export default Pdepagos;
