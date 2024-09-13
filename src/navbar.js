@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
 
+
+
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -11,9 +13,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <nav className="navbar">
-      
       <Link to="/" className="logo">
-        <img alt="Logo" src='../src/img/logo.png' />
+        <img src="/img/logo.png" alt='255rem'/>
       </Link>
       <div className="nav-links">
         <Link to="/">Qué hacemos</Link>
@@ -40,5 +41,3 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 };
 
 export default Navbar;
-
-//aa
