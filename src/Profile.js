@@ -35,7 +35,7 @@ const Profile = () => {
             <button className="edit-button">Editar</button>
           </div>
           <div className="info-row">
-            <p><strong>Localidad:</strong> Tenesse</p>
+            <p><strong>Empresa:</strong> </p>
             <button className="edit-button">Editar</button>
           </div>
         </section>

@@ -83,15 +83,17 @@
   
   /* Botón de editar */
   .edit-button {
-    padding: 6px 12px;
-    background-color: #007bff; /* Azul clásico */
+    padding: 4px 8px;  /* Mantener una proporción agradable */
+    font-size: 12px;  /* Tamaño de fuente adecuado */
+    margin-left: 5px; /* Un pequeño margen a la izquierda */
+    background-color: #007bff;
     color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 14px;
-    margin-left: 10px;
+    max-width: 70px; /* Ancho máximo para que no se haga demasiado ancho */
+    text-align: center; /* Centrar el texto dentro del botón */
   }
   
   .edit-button:hover {
@@ -132,13 +134,27 @@
     }
   
     .info-row {
-      flex-direction: column;
-      align-items: flex-start;
+      display: flex;
+      align-items: center; /* Centramos los elementos verticalmente */
+      margin-bottom: 20px;
+    
     }
-  
+    
+    .info-row p {
+      margin-right: 10px;           /* Espacio entre el texto y el botón */
+    }
     .edit-button {
-      margin-top: 10px;
-      align-self: flex-end;
+      margin-left: auto;  /* Empuja el botón hacia el lado derecho */
+      padding: 4px 8px;
+      font-size: 12px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      max-width: 70px;
+      text-align: center;
     }
   
     .templates-gallery {
