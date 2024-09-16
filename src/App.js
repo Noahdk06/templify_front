@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './home';
@@ -6,7 +6,7 @@ import Login from './Login';
 import Register from './Register';
 import TemplatesHub from './TemplateHub';
 import Support from './Support';
-import Plans from './Plans';
+//import Plans from './Plans';
 import BibliotecaDeArchivos from './bibliotecadearchivos';
 import Navbar from './navbar';
 import Profile from './Profile';
@@ -15,17 +15,19 @@ import Pdepagos from './pdepagos';
 import FooterLayout from './FooterLayout'; // Importa el FooterLayout
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/templates" element={<TemplatesHub />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/plans" element={<Plans />} />
+          {/* <Route path="/plans" element={<Plans />} /> */}
           <Route path="/bibliotecadearchivos" element={<BibliotecaDeArchivos />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/template/:id" element={<Template />} />
