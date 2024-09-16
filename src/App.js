@@ -1,59 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
 import './App.css';
 import Home from './home';
 import Login from './Login';
 import Register from './Register';
 import TemplatesHub from './TemplateHub';
 import Support from './Support';
-import Plans from './Plans'; // Asegúrate de que este componente se llama "Plans"
+import Plans from './Plans';
 import BibliotecaDeArchivos from './bibliotecadearchivos';
 import Navbar from './navbar';
 import Profile from './Profile';
 import Template from './Template';
-import Pdepagos from './pdepagos'; // Importa el componente correctamente
-
-const BACKEND_URL = 'http://localhost:3033';
+import Pdepagos from './pdepagos';
+import FooterLayout from './FooterLayout'; // Importa el FooterLayout
 
 function App() {
-  const [data, setData] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    axios.get(`${BACKEND_URL}/api/data`)
-      .then(response => {
-        setData(response.data.message);
-      })
-      .catch(error => {
-        console.error('Error al conectar con el backend', error);
-      });
-  }, []);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
-
   return (
     <Router>
       <div className="App">
-        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={handleLogout} />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login setIsLoggedIn={handleLogin} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/templates" element={<TemplatesHub />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/plans" element={<Plans />} /> {/* Cambiado a "Plans" */}
+          <Route path="/plans" element={<Plans />} />
           <Route path="/bibliotecadearchivos" element={<BibliotecaDeArchivos />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/template/:id" element={<Template />} />
-          <Route path="/pdepago" element={<Pdepagos />} /> {/* Añadido para Pdepagos */}
+          <Route path="/pdepago" element={<Pdepagos />} />
         </Routes>
+        <FooterLayout /> {/* Agrega el Footer */}
       </div>
     </Router>
   );
