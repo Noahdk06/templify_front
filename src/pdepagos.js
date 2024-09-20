@@ -4,71 +4,52 @@ import './pdepagos.css';
 const Pdepagos = () => {
   const [selectedDuration, setSelectedDuration] = useState('3 Meses');
 
-  // Definimos los precios para cada plan según la duración seleccionada
   const prices = {
-    '3 Meses': {
-      personal: 10,
-      startup: 22,
-      empresa: 165,
-      plazo: 90
-    },
-    '6 Meses': {
-      personal: 18,
-      startup: 40,
-      empresa: 300,
-      plazo: 180
-    },
-    '9 Meses': {
-      personal: 25,
-      startup: 54,
-      empresa: 420,
-      plazo: 270
-    },
-    'Anual': {
-      personal: 32,
-      startup: 62,
-      empresa: 530,
-      plazo: 365
-    }
+    '3 Meses': { personal: 10, startup: 22, empresa: 165, plazo: 90 },
+    '6 Meses': { personal: 18, startup: 40, empresa: 300, plazo: 180 },
+    '9 Meses': { personal: 25, startup: 54, empresa: 420, plazo: 270 },
+    'Anual': { personal: 32, startup: 62, empresa: 530, plazo: 365 },
   };
 
-  // Función que maneja el cambio de duración
   const handleDurationChange = (duration) => {
-    setSelectedDuration(duration);  // Aquí usamos setSelectedDuration
+    setSelectedDuration(duration);
   };
 
   const handlePaymentSelection = async (plan) => {
-    const token = localStorage.getItem('token'); // Obtener el token
-    const user = JSON.parse(localStorage.getItem('user')); // Obtener el usuario
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    // Validar si existe una sesión
     if (!token || !user) {
-      alert("No hay una sesión iniciada. Por favor, inicia sesión para continuar.");
-      return;  // Salir de la función si no hay sesión
+      alert("No hay una sesión iniciada.");
+      return;
     }
 
-    const plazo = prices[selectedDuration].plazo;
+    const { plazo } = prices[selectedDuration];
     const precio = prices[selectedDuration][plan.toLowerCase()];
 
+    if (precio === undefined) {
+      console.error(`Precio no encontrado para el plan: ${plan} con duración: ${selectedDuration}`);
+      alert("Error: Precio no encontrado para el plan seleccionado.");
+      return;
+    }
+
+    console.log("Enviando al backend:", { nombrePdP: plan, precio, plazo, userId: user.id });
+
     try {
-      const response = await fetch('http://localhost:3000/seleccionarPdP', {
+      const response = await fetch('http://localhost:3033/api/user/seleccionarPdP', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Usar el token en el encabezado
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          PdP: plan,
-          nombrePdP: plan,
-          precio: precio,
-          plazo: plazo,
-          userId: user.id // Enviar el ID del usuario al backend
-        })
+        body: JSON.stringify({ nombrePdP: plan, precio, plazo, userId: user.id })
       });
 
+      console.log("Respuesta del servidor:", response);
+      
       if (response.ok) {
-        const data = await response.json();  // Opcional, puedes eliminar esta línea si no la necesitas
-        console.log(data);  // Opcional, puedes eliminar esta línea si no la necesitas
+        const data = await response.json();
+        console.log(data);
         alert("Plan de Pago aplicado correctamente");
       } else {
         console.error("Error al aplicar el plan de pago");
@@ -89,7 +70,7 @@ const Pdepagos = () => {
             <button
               key={duration}
               className={selectedDuration === duration ? 'duration-btn active' : 'duration-btn'}
-              onClick={() => handleDurationChange(duration)}  // Aquí usamos setSelectedDuration
+              onClick={() => handleDurationChange(duration)}
             >
               {duration}
             </button>
@@ -97,52 +78,24 @@ const Pdepagos = () => {
         </div>
 
         <div className="pdepagos">
-          <div className="plan">
-            <h2>PLAN Personal</h2>
-            <ul>
-              <li>Acceso a creación y edición de templates</li>
-              <li>Acceso a biblioteca de archivos</li>
-              <li>Acceso a funciones DEX HTML</li>
-              <li>Subir templates al HUB</li>
-              <li>Usar templates predeterminados</li>
-              <li>Exportación de templates a tótem</li>
-              <li>Manejo del archivo en el tótem de manera remota</li>
-            </ul>
-            <p><strong>${prices[selectedDuration].personal} USD</strong></p>
-            <button onClick={() => handlePaymentSelection('Personal')}>Proceder al pago</button>
-          </div>
-
-          <div className="plan">
-            <h2>PLAN Start-Up</h2>
-            <ul>
-              <li>Acceso a creación y edición de templates</li>
-              <li>Acceso a biblioteca de archivos empresarial</li>
-              <li>Acceso a funciones DEX HTML y SQL</li>
-              <li>Subir templates al HUB</li>
-              <li>Usar templates predeterminados y subidos</li>
-              <li>Exportación de templates a tótem</li>
-              <li>Manejo del archivo en el tótem de manera remota</li>
-              <li>Colaboradores (Hasta 3 personas)</li>
-            </ul>
-            <p><strong>${prices[selectedDuration].startup} USD</strong></p>
-            <button onClick={() => handlePaymentSelection('Start-Up')}>Proceder al pago</button>
-          </div>
-
-          <div className="plan">
-            <h2>PLAN Empresa</h2>
-            <ul>
-              <li>Acceso a creación y edición de templates</li>
-              <li>Acceso a biblioteca de archivos empresarial</li>
-              <li>Acceso a funciones DEX HTML y SQL</li>
-              <li>Subir templates al HUB</li>
-              <li>Usar templates predeterminados y subidos</li>
-              <li>Exportación de templates a tótem</li>
-              <li>Manejo del archivo en el tótem de manera remota</li>
-              <li>Colaboradores (Hasta 5 personas)</li>
-            </ul>
-            <p><strong>${prices[selectedDuration].empresa} USD</strong></p>
-            <button onClick={() => handlePaymentSelection('Empresa')}>Proceder al pago</button>
-          </div>
+          {['Personal', 'Start-Up', 'Empresa'].map((plan) => (
+            <div className="plan" key={plan}>
+              <h2>PLAN {plan}</h2>
+              <ul>
+                <li>Acceso a creación y edición de templates</li>
+                <li>Acceso a biblioteca de archivos</li>
+                <li>Acceso a funciones DEX HTML</li>
+                <li>Subir templates al HUB</li>
+                <li>Usar templates predeterminados</li>
+                <li>Exportación de templates a tótem</li>
+                <li>Manejo del archivo en el tótem de manera remota</li>
+                {plan === 'Start-Up' && <li>Colaboradores (Hasta 3 personas)</li>}
+                {plan === 'Empresa' && <li>Colaboradores (Hasta 5 personas)</li>}
+              </ul>
+              <p><strong>${prices[selectedDuration][plan.toLowerCase()]} USD</strong></p>
+              <button onClick={() => handlePaymentSelection(plan)}>Proceder al pago</button>
+            </div>
+          ))}
         </div>
       </section>
     </div>

@@ -46,7 +46,7 @@ const Intro = () => {
           diseñar y personalizar sus propios templates de manera intuitiva y eficiente. Gracias a nuestra integración con diversas bases de datos, 
           puedes gestionar y actualizar tu contenido en tiempo real, asegurando que siempre dispongas de la información más relevante y actualizada.
         </p>
-        <a href="#" className="btn">Ir a TemplateHUB &gt;</a>
+        <a href="/templates" className="btn">Ir a TemplateHUB &gt;</a>
       </div>
       <img src='/img/logo.png' alt="Logo" />
     </section>
