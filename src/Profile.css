@@ -69,9 +69,13 @@
 /* Fila de información */
 .info-row {
   display: flex;
-  justify-content: space-between;
+  padding: 15px;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.inline-form{
+  margin-left: 30px
 }
 
 /* Ajustar el botón de editar para que esté alineado a la derecha y más pequeño */
@@ -84,6 +88,8 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 200px;
+  margin-left: 30px;
 }
 
 .edit-button:hover {
