@@ -4,11 +4,19 @@ import './pdepagos.css';
 const Pdepagos = () => {
   const [selectedDuration, setSelectedDuration] = useState('3 Meses');
 
+  // Precios definidos
   const prices = {
     '3 Meses': { personal: 10, startup: 22, empresa: 165, plazo: 90 },
     '6 Meses': { personal: 18, startup: 40, empresa: 300, plazo: 180 },
     '9 Meses': { personal: 25, startup: 54, empresa: 420, plazo: 270 },
     'Anual': { personal: 32, startup: 62, empresa: 530, plazo: 365 },
+  };
+
+  // Mapeo de nombres a claves en el objeto 'prices'
+  const planKeys = {
+    Personal: 'personal',
+    'Start-Up': 'startup',
+    Empresa: 'empresa'
   };
 
   const handleDurationChange = (duration) => {
@@ -25,7 +33,8 @@ const Pdepagos = () => {
     }
 
     const { plazo } = prices[selectedDuration];
-    const precio = prices[selectedDuration][plan.toLowerCase()];
+    const planKey = planKeys[plan];  // Corregido: uso de planKeys para obtener la clave correcta
+    const precio = prices[selectedDuration][planKey];
 
     if (precio === undefined) {
       console.error(`Precio no encontrado para el plan: ${plan} con duración: ${selectedDuration}`);
@@ -92,7 +101,7 @@ const Pdepagos = () => {
                 {plan === 'Start-Up' && <li>Colaboradores (Hasta 3 personas)</li>}
                 {plan === 'Empresa' && <li>Colaboradores (Hasta 5 personas)</li>}
               </ul>
-              <p><strong>${prices[selectedDuration][plan.toLowerCase()]} USD</strong></p>
+              <p><strong>${prices[selectedDuration][planKeys[plan]]} USD</strong></p> {/* Corregido */}
               <button onClick={() => handlePaymentSelection(plan)}>Proceder al pago</button>
             </div>
           ))}

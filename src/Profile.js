@@ -10,6 +10,7 @@ const Profile = () => {
     plan: '',
     telefono: '',
   });
+
   const [editMode, setEditMode] = useState({
     nombre: false,
     correo: false,
@@ -18,11 +19,27 @@ const Profile = () => {
     telefono: false,
   });
 
+  const [formData, setFormData] = useState({
+    nombre: { value: '', password: '' },
+    correo: { value: '', password: '' },
+    empresa: { value: '', password: '' },
+    plan: { value: '', password: '' },
+    telefono: { value: '', password: '' },
+  });
+
   useEffect(() => {
-    // Obtener datos del perfil del usuario desde el backend
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/profile'); // Ajusta la ruta de tu API
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('No se ha iniciado sesión.');
+          return;
+        }
+        const response = await axios.get('/api/user/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -35,82 +52,118 @@ const Profile = () => {
     setEditMode({ ...editMode, [field]: !editMode[field] });
   };
 
-  const handleInputChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+  const handleInputChange = (e, field) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [field]: { ...formData[field], [name]: value },
+    });
   };
 
   const handleSaveClick = async (field) => {
     try {
-      await axios.put(`/api/profile/${field}`, { [field]: userData[field] });
-      setEditMode({ ...editMode, [field]: false });
+      const token = localStorage.getItem('token');
+      const { value, password } = formData[field];
+      const response = await axios.patch(
+        `/api/user/updateProfile`,
+        { field, value, password },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setEditMode({ ...editMode, [field]: false });
+        setUserData({ ...userData, [field]: value });
+      } else {
+        console.error(`Error updating ${field}:`, response.data.message);
+      }
     } catch (error) {
       console.error(`Error updating ${field}:`, error);
     }
   };
 
+  const renderEditForm = (field, placeholder) => (
+    <div className="inline-form">
+      <input
+        type="text"
+        name="value"
+        value={formData[field].value}
+        onChange={(e) => handleInputChange(e, field)}
+        placeholder={placeholder}
+        className="input-field"
+      />
+      <input
+        type="password"
+        name="password"
+        value={formData[field].password}
+        onChange={(e) => handleInputChange(e, field)}
+        placeholder="Contraseña"
+        className="input-field"
+      />
+      <button className="save-button" onClick={() => handleSaveClick(field)}>
+        Guardar
+      </button>
+    </div>
+  );
+
   return (
     <div className="profile-container">
-      {/* Sección lateral izquierda */}
       <div className="profile-sidebar">
-        <img src="/path-to-avatar.png" alt="Profile Avatar" className="profile-avatar" />
+        <img
+          src="/path-to-avatar.png"
+          alt="Profile Avatar"
+          className="profile-avatar"
+        />
         <h3>{userData.nombre || 'Usuario'}</h3>
-        <p>{userData.plan ? userData.plan : 'Sin plan activo'}</p>
-        <p>{userData.empresa ? userData.empresa : 'Sin empresa'}</p>
+        <p>{userData.plan || 'Sin plan activo'}</p>
+        <p>{userData.empresa || 'Sin empresa'}</p>
         <button className="delete-user-button">Eliminar usuario</button>
       </div>
 
-      {/* Sección derecha: Información del perfil */}
       <div className="profile-details">
         <h3>Información del usuario</h3>
 
-        {/* Fila para Nombre */}
         <div className="info-row">
-          <div className="info-text">
-            <p><strong>Nombre:</strong> {userData.nombre || 'No disponible'}</p>
-          </div>
-          <button className="edit-button" onClick={() => handleEditClick('nombre')}>
-            {editMode.nombre ? 'Guardar' : 'Editar'}
-          </button>
+          <strong>Nombre:</strong>
+          <span>{userData.nombre || 'No disponible'}</span>
+          {editMode.nombre ? (
+            renderEditForm('nombre', 'Nuevo nombre')
+          ) : (
+            <button className="edit-button" onClick={() => handleEditClick('nombre')}>Editar</button>
+          )}
         </div>
 
-        {/* Fila para Correo */}
         <div className="info-row">
-          <div className="info-text">
-            <p><strong>Correo:</strong> {userData.correo || 'No disponible'}</p>
-          </div>
-          <button className="edit-button" onClick={() => handleEditClick('correo')}>
-            {editMode.correo ? 'Guardar' : 'Editar'}
-          </button>
+          <strong>Correo:</strong>
+          <span>{userData.correo || 'No disponible'}</span>
+          {editMode.correo ? (
+            renderEditForm('correo', 'Nuevo correo')
+          ) : (
+            <button className="edit-button" onClick={() => handleEditClick('correo')}>Editar</button>
+          )}
         </div>
 
-        {/* Fila para Empresa */}
         <div className="info-row">
-          <div className="info-text">
-            <p><strong>Empresa:</strong> {userData.empresa || 'Sin empresa'}</p>
-          </div>
-          <button className="edit-button" onClick={() => handleEditClick('empresa')}>
-            {editMode.empresa ? 'Guardar' : 'Editar'}
-          </button>
+          <strong>Empresa:</strong>
+          <span>{userData.empresa || 'No disponible'}</span>
+          {editMode.empresa ? (
+            renderEditForm('empresa', 'Nueva empresa')
+          ) : (
+            <button className="edit-button" onClick={() => handleEditClick('empresa')}>Editar</button>
+          )}
         </div>
 
-        {/* Fila para Plan */}
         <div className="info-row">
-          <div className="info-text">
-            <p><strong>Plan de pago:</strong> {userData.plan || 'Sin plan activo'}</p>
-          </div>
-          <button className="edit-button" onClick={() => handleEditClick('plan')}>
-            {editMode.plan ? 'Guardar' : 'Editar'}
-          </button>
-        </div>
-
-        {/* Fila para Número telefónico */}
-        <div className="info-row">
-          <div className="info-text">
-            <p><strong>Número telefónico:</strong> {userData.telefono || 'No disponible'}</p>
-          </div>
-          <button className="edit-button" onClick={() => handleEditClick('telefono')}>
-            {editMode.telefono ? 'Guardar' : 'Agregar número telefónico'}
-          </button>
+          <strong>Teléfono:</strong>
+          <span>{userData.telefono || 'No disponible'}</span>
+          {editMode.telefono ? (
+            renderEditForm('telefono', 'Nuevo teléfono')
+          ) : (
+            <button className="edit-button" onClick={() => handleEditClick('telefono')}>Editar</button>
+          )}
         </div>
       </div>
     </div>
