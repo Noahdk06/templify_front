@@ -6,7 +6,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <nav className="navbar">
       <Link to="/" className="logo">
-        <img src="/img/logo.png" alt='255rem'/>
+        <img src="/img/logo.png" alt="Logo" />
       </Link>
       <div className="nav-links">
         <Link to="/">Qué hacemos</Link>
@@ -19,11 +19,16 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         {isLoggedIn ? (
           <>
             <Link to="/profile" className="profile-btn">Mi Perfil</Link>
-            <button onClick={() => { 
-              localStorage.removeItem('token'); 
-              localStorage.removeItem('user'); 
-              setIsLoggedIn(false); 
-            }} className="logout-btn">Cerrar Sesión</button>
+            <button 
+              onClick={() => { 
+                localStorage.removeItem('token'); 
+                localStorage.removeItem('user'); 
+                setIsLoggedIn(false); 
+              }} 
+              className="logout-btn"
+            >
+              Cerrar Sesión
+            </button>
           </>
         ) : (
           <>
