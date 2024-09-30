@@ -1,156 +1,58 @@
-/* App.css */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f9;
+/* Reseteo básico de estilo */
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f9;
 }
 
-.inicioB {
+/* Contenedor principal de la aplicación */
+.app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* Asegura que ocupe al menos toda la pantalla */
 }
 
-.container {
-  flex: 1;
+/* Contenedor para el contenido entre la navbar y el footer */
+.content-container {
+  flex: 1; /* Ocupa el espacio disponible entre navbar y footer */
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
-/* Estilos para el Header */
-header {
+/* Estilos para el footer */
+footer {
+  background-color: #007bff; /* Fondo azul */
+  color: white;
+  padding: 20px;
   text-align: center;
+  width: 100%;
 }
 
-header h1 {
-  font-size: 24px;
-  color: #333;
+footer p {
+  margin: 0;
 }
 
-header p {
-  font-size: 16px;
-  color: #666;
+/* Estilos para la navbar */
+.navbar {
+  background-color: #333;
+  padding: 10px;
 }
 
-/* Estilos para el Main */
-main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-#intro {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.intro-text {
-  flex: 1;
-}
-
-.intro-text h2 {
-  font-size: 24px;
-  color: #333;
-}
-
-.intro-text p {
-  font-size: 16px;
-  color: #666;
-}
-
-.intro-text .btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #ffffff;
+.navbar a {
+  color: white;
+  padding: 14px 20px;
   text-decoration: none;
-  border-radius: 8px;
-}
-
-#services {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-#services img {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-}
-
-.services-text {
-  flex: 1;
-}
-
-.services-text h2 {
-  font-size: 24px;
-  color: #333;
-}
-
-.services-text p {
-  font-size: 16px;
-  color: #666;
-}
-
-.services-text .btn {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #ffffff;
-  text-decoration: none;
-  border-radius: 8px;
 }
 
-/* Estilos para el espacio de anuncios */
-.ad-space {
-  background-color: #e0e0e0;
-  flex: 1;
+.navbar a:hover {
+  background-color: #555;
+  transition: 0.3s;
 }
 
-.ad-space.left-ad {
-  margin-right: 10px;
-}
-
-.ad-space.right-ad {
-  margin-left: 10px;
-}
-
-/* Estilos para el formulario y botones */
-.form-container {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 40px;
-  max-width: 800px;
-  width: 100%;
-}
-
-.registration-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 16px;
-  margin-bottom: 20px;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
+/* Estilos generales para botones */
 button {
-  width: 100%;
   padding: 16px;
   border: none;
   border-radius: 8px;
@@ -163,6 +65,29 @@ button:hover {
   transform: translateY(-2px);
 }
 
+/* Estilos para contenedores generales */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Estilos para los headers */
+h1, h2 {
+  color: #333;
+}
+
+/* Estilos para los inputs y formularios */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Botones de formularios */
 .register-btn {
   background-color: #007bff;
   color: #ffffff;
@@ -174,6 +99,7 @@ button:hover {
   margin-top: 10px;
 }
 
+/* Botones de redes sociales */
 .social-login {
   display: flex;
   flex-direction: column;
@@ -195,7 +121,6 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* Colores específicos para cada red social */
 .google {
   background-color: #db4a39;
   border: 1px solid #db4a39;
@@ -211,30 +136,10 @@ button:hover {
   border: 1px solid #3b5998;
 }
 
-
-/* src/hub.css */
+/* Estilos adicionales de secciones */
 .hub {
   font-family: Arial, sans-serif;
   padding: 20px;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.title {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.section {
-  margin-bottom: 40px;
-}
-
-.section-title {
-  font-size: 1.5em;
-  margin-bottom: 10px;
 }
 
 .images {
@@ -265,18 +170,6 @@ button:hover {
   padding: 20px;
 }
 
-.templates-section {
-  margin-bottom: 20px;
-}
-
-.templates-section h2 {
-  margin-bottom: 10px;
-}
-
-.templates-section p {
-  margin: 0;
-}
-
 .support, .plans {
   display: flex;
   flex-direction: column;
@@ -293,17 +186,10 @@ button:hover {
   padding: 20px;
 }
 
-.support-section, .plans-section {
-  margin-bottom: 20px;
+/* Adaptación a pantallas más pequeñas */
+@media (max-width: 768px) {
+  .navbar a {
+    display: block;
+    text-align: center;
+  }
 }
-
-.support-section h2, .plans-section h2 {
-  margin-bottom: 10px;
-}
-
-.support-section p, .plans-section p {
-  margin: 0;
-}
-
-
-/* Agrega más estilos según sea necesario */

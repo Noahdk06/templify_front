@@ -1,3 +1,20 @@
+/* Asegúrate de que el html y body ocupen el 100% de la altura */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que la página ocupe al menos toda la altura de la ventana */
+}
+
+.main-content {
+    flex-grow: 1; /* Asegura que el contenido principal ocupe el espacio necesario */
+}
+
 .footer-container {
     background-color: #d1e6f7; /* Fondo celeste claro */
     color: #ffffff; /* Texto blanco */
@@ -7,8 +24,12 @@
     padding: 40px 20px;
     flex-wrap: wrap;
     font-family: 'Open Sans', sans-serif;
+    position: relative;
+    width: 100%;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+    z-index: 1; /* Asegura que esté en la capa correcta */
 }
-  
+
 .footer-section {
     flex: 1;
     margin: 10px;
@@ -16,7 +37,7 @@
     padding: 20px;
     background-color: transparent; /* Fondo transparente */
 }
-  
+
 .footer-section h3 {
     font-size: 1.4rem;
     font-weight: 600;
@@ -24,7 +45,7 @@
     color: #012a4a; /* Azul oscuro para los títulos */
     position: relative;
 }
-  
+
 .footer-section h3::after {
     content: "";
     width: 50px;
@@ -33,7 +54,7 @@
     display: block;
     margin-top: 10px;
 }
-  
+
 .footer-content div {
     margin: 12px 0;
     font-size: 1rem;
@@ -41,61 +62,62 @@
     color: #334e68; /* Gris azulado para el texto */
     transition: color 0.3s;
 }
-  
+
 .footer-content div:hover {
     color: #0077b6; /* Azul intermedio en hover */
     cursor: pointer;
 }
-  
+
 .footer-logos {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     align-items: center;
 }
-  
+
 .footer-logos img {
     width: 70px;
     height: auto;
     filter: grayscale(100%);
     transition: transform 0.3s, filter 0.3s;
 }
-  
+
 .footer-logos img:hover {
     transform: scale(1.1);
     filter: grayscale(0%) brightness(1.2);
 }
-  
+
 .footer-contact p {
     margin: 8px 0;
     font-size: 1rem;
     color: #ffffff; /* Texto blanco */
 }
-  
+
 .footer-icons {
     display: flex;
     gap: 15px;
     margin-top: 10px;
 }
-  
+
 .footer-icons img {
     width: 40px;
     height: 40px;
     filter: grayscale(100%);
     transition: transform 0.3s, filter 0.3s;
 }
-  
+
 .footer-icons img:hover {
     transform: scale(1.2);
     filter: grayscale(0%) brightness(1.2);
 }
-  
+
+/* Estilo para pantallas pequeñas */
 @media screen and (max-width: 768px) {
     .footer-container {
         flex-direction: column;
         align-items: center;
     }
-  
+
     .footer-section {
         text-align: center;
         margin-bottom: 30px;
