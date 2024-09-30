@@ -76,7 +76,7 @@
 .register-btn:hover {
     background-color: blue; /* Fondo blanco para el botón de registrarse */
     color: #e9ecef; /* Texto azul para contraste */   
-    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+    transform: scale(1.05); /* Efecto de aumento al pasar el raton */
 }
 
 /* Responsividad */
