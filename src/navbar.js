@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+
+  // Verificar si hay un token en localStorage para mantener la sesión activa
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true); // Mantiene la sesión activa si hay un token
+    }
+  }, [setIsLoggedIn]); // Se ejecuta solo cuando el componente se monta
+
   return (
     <nav className="navbar">
       <Link to="/" className="logo">
@@ -23,7 +32,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
               onClick={() => { 
                 localStorage.removeItem('token'); 
                 localStorage.removeItem('user'); 
-                setIsLoggedIn(false); 
+                setIsLoggedIn(false); // Cierra sesión y actualiza el estado
               }} 
               className="logout-btn"
             >
