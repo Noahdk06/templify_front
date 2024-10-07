@@ -3,8 +3,8 @@ import './pdepagos.css';
 
 const Pdepagos = () => {
   const [selectedDuration, setSelectedDuration] = useState('3 Meses');
+  const [showModal, setShowModal] = useState(false); // Nuevo estado para controlar el modal
 
-  // Precios definidos
   const prices = {
     '3 Meses': { personal: 10, startup: 22, empresa: 165, plazo: 90 },
     '6 Meses': { personal: 18, startup: 40, empresa: 300, plazo: 180 },
@@ -12,7 +12,6 @@ const Pdepagos = () => {
     'Anual': { personal: 32, startup: 62, empresa: 530, plazo: 365 },
   };
 
-  // Mapeo de nombres a claves en el objeto 'prices'
   const planKeys = {
     Personal: 'personal',
     'Start-Up': 'startup',
@@ -24,6 +23,8 @@ const Pdepagos = () => {
   };
 
   const handlePaymentSelection = async (plan) => {
+    setShowModal(true);  // Mostrar el modal al hacer clic en el botón
+
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -33,7 +34,7 @@ const Pdepagos = () => {
     }
 
     const { plazo } = prices[selectedDuration];
-    const planKey = planKeys[plan];  // Corregido: uso de planKeys para obtener la clave correcta
+    const planKey = planKeys[plan];
     const precio = prices[selectedDuration][planKey];
 
     if (precio === undefined) {
@@ -41,8 +42,6 @@ const Pdepagos = () => {
       alert("Error: Precio no encontrado para el plan seleccionado.");
       return;
     }
-
-    console.log("Enviando al backend:", { nombrePdP: plan, precio, plazo, userId: user.id });
 
     try {
       const response = await fetch('http://localhost:3033/api/user/seleccionarPdP', {
@@ -54,18 +53,14 @@ const Pdepagos = () => {
         body: JSON.stringify({ nombrePdP: plan, precio, plazo, userId: user.id })
       });
 
-      console.log("Respuesta del servidor:", response);
-      
       if (response.ok) {
         const data = await response.json();
         console.log(data);
         alert("Plan de Pago aplicado correctamente");
       } else {
-        console.error("Error al aplicar el plan de pago");
         alert("Error al aplicar el plan de pago");
       }
     } catch (error) {
-      console.error("Error en la solicitud:", error);
       alert("Error en la solicitud");
     }
   };
@@ -101,12 +96,28 @@ const Pdepagos = () => {
                 {plan === 'Start-Up' && <li>Colaboradores (Hasta 3 personas)</li>}
                 {plan === 'Empresa' && <li>Colaboradores (Hasta 5 personas)</li>}
               </ul>
-              <p><strong>${prices[selectedDuration][planKeys[plan]]} USD</strong></p> {/* Corregido */}
+              <p><strong>${prices[selectedDuration][planKeys[plan]]} USD</strong></p>
               <button onClick={() => handlePaymentSelection(plan)}>Proceder al pago</button>
             </div>
           ))}
         </div>
       </section>
+
+      {/* Modal emergente */}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Prueba gratuita</h3>
+            <p>Al proceder se acepta una suscripción al plan de prueba gratuita por una semana.</p>
+            <p>Para más información leer políticas de servicio.</p>
+            <div>
+              <input type="checkbox" id="terms" />
+              <label htmlFor="terms">He leído y aceptado los términos y condiciones</label>
+            </div>
+            <button onClick={() => setShowModal(false)}>Continuar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
