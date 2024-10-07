@@ -20,6 +20,8 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError('');  // Limpiar cualquier error previo
+    setSuccessMessage('');  // Limpiar mensaje de éxito previo
     try {
       const response = await axios.post(`${BACKEND_URL}/api/user/register`, formData);
       if (response.status === 201) {
@@ -30,8 +32,14 @@ const Register = () => {
         }, 2000); // Opcional: tiempo para mostrar el mensaje de éxito antes de redirigir
       }
     } catch (error) {
+      if (error.response && error.response.status === 409) {
+        // Si el código de estado es 409, el nombre de usuario ya existe
+        setError('El nombre de usuario ya está en uso, elige otro.');
+      } else {
+        // Otros posibles errores
+        setError('Error al registrar el usuario. Intenta de nuevo.');
+      }
       console.error('Error durante el registro:', error);
-      setError('Error al registrar el usuario. Intenta de nuevo.');
     }
   };
 
@@ -111,7 +119,9 @@ const Register = () => {
             onChange={handleChange}
           />
         </div>
+        {/* Mostrar el error en rojo si existe */}
         {error && <p style={{ color: 'red' }}>{error}</p>}
+        {/* Mostrar el mensaje de éxito en verde si existe */}
         {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
         <button type="submit" className="submit-button">Registrarse</button>
       </form>

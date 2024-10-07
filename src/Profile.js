@@ -27,24 +27,42 @@ const Profile = () => {
     telefono: { value: '', password: '' },
   });
 
+  // Función para obtener los datos del perfil del usuario desde el backend
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Recupera el token y el ID del usuario desde el localStorage
         const token = localStorage.getItem('token');
-        if (!token) {
-          console.error('No se ha iniciado sesión.');
+        const user = JSON.parse(localStorage.getItem('user')); // Asegúrate de que `user` contiene el ID
+  
+        if (!token || !user?.id) {
+          console.error('No se ha iniciado sesión o falta el ID de usuario.');
           return;
         }
-        const response = await axios.get('/api/user/profile', {
+  
+        // Hacemos una solicitud al backend para obtener el perfil del usuario usando el token
+        const response = await axios.get('http://localhost:3033/api/user/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUserData(response.data);
+  
+        if (response.status === 200) {
+          setUserData({
+            nombre: response.data.nombre,
+            correo: response.data.correo,
+            empresa: response.data.empresa,
+            plan: response.data.plan,
+            telefono: response.data.telefono,
+          });
+        } else {
+          console.error('Error al obtener los datos del perfil:', response.data.message);
+        }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Error al obtener los datos del perfil:', error.message || error.response.data);
       }
     };
+  
     fetchData();
   }, []);
 
@@ -81,7 +99,7 @@ const Profile = () => {
         console.error(`Error updating ${field}:`, response.data.message);
       }
     } catch (error) {
-      console.error(`Error updating ${field}:`, error);
+      console.error(`Error updating ${field}:`, error.response ? error.response.data : error.message);
     }
   };
 
@@ -112,20 +130,14 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <div className="profile-sidebar">
-        <img
-          src="/path-to-avatar.png"
-          alt="Profile Avatar"
-          className="profile-avatar"
-        />
+        <img src="/path-to-avatar.png" alt="Profile Avatar" className="profile-avatar" />
         <h3>{userData.nombre || 'Usuario'}</h3>
         <p>{userData.plan || 'Sin plan activo'}</p>
         <p>{userData.empresa || 'Sin empresa'}</p>
         <button className="delete-user-button">Eliminar usuario</button>
       </div>
-
       <div className="profile-details">
         <h3>Información del usuario</h3>
-
         <div className="info-row">
           <strong>Nombre:</strong>
           <span>{userData.nombre || 'No disponible'}</span>
@@ -135,7 +147,6 @@ const Profile = () => {
             <button className="edit-button" onClick={() => handleEditClick('nombre')}>Editar</button>
           )}
         </div>
-
         <div className="info-row">
           <strong>Correo:</strong>
           <span>{userData.correo || 'No disponible'}</span>
@@ -145,7 +156,6 @@ const Profile = () => {
             <button className="edit-button" onClick={() => handleEditClick('correo')}>Editar</button>
           )}
         </div>
-
         <div className="info-row">
           <strong>Empresa:</strong>
           <span>{userData.empresa || 'No disponible'}</span>
@@ -155,7 +165,6 @@ const Profile = () => {
             <button className="edit-button" onClick={() => handleEditClick('empresa')}>Editar</button>
           )}
         </div>
-
         <div className="info-row">
           <strong>Teléfono:</strong>
           <span>{userData.telefono || 'No disponible'}</span>
