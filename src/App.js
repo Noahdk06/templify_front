@@ -14,6 +14,8 @@ import Pdepagos from './pdepagos';
 import FooterLayout from './FooterLayout'; // Importa el FooterLayout
 import ProtectedRoute from './components/protectedRoute'; // Importa el ProtectedRoute
 import Unauthorized from './unauthorized'; // Importa el componente de advertencia
+import Chatbot from './Chatbot'; // Importa el componente Chatbot
+import ContactForm from './ContactForm'; // Importa el componente ContactForm
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,6 +39,10 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/templates" element={<TemplatesHub />} />
             <Route path="/support" element={<Support />} />
+
+            {/* Nuevas rutas agregadas */}
+            <Route path="/chatbot" element={<Chatbot />} /> {/* Ruta para Chatbot */}
+            <Route path="/contact" element={<ContactForm />} /> {/* Ruta para ContactForm */}
 
             {/* Rutas protegidas */}
             <Route path="/bibliotecadearchivos" element={
