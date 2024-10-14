@@ -31,19 +31,17 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Recupera el token y el ID del usuario desde el localStorage
-        const token = localStorage.getItem('token');
-        const user = JSON.parse(localStorage.getItem('user')); // Asegúrate de que `user` contiene el ID
+        const token = localStorage.getItem('token'); // Recuperamos el token
+        const user = JSON.parse(localStorage.getItem('user')); // Asegúrate de que el user tiene el id
   
         if (!token || !user?.id) {
           console.error('No se ha iniciado sesión o falta el ID de usuario.');
           return;
         }
   
-        // Hacemos una solicitud al backend para obtener el perfil del usuario usando el token
         const response = await axios.get('http://localhost:3033/api/user/profile', {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, // Enviamos el token para autenticar
           },
         });
   
@@ -65,7 +63,7 @@ const Profile = () => {
   
     fetchData();
   }, []);
-
+  
   const handleEditClick = (field) => {
     setEditMode({ ...editMode, [field]: !editMode[field] });
   };

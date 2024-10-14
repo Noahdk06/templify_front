@@ -16,6 +16,8 @@ import Pdepagos from './pdepagos';
 import FooterLayout from './FooterLayout'; // Importa el FooterLayout
 import ProtectedRoute from './components/protectedRoute'; // Importa el ProtectedRoute
 import Unauthorized from './unauthorized'; // Importa el componente de advertencia
+import Chatbot from './Chatbot'; // Importa el componente Chatbot
+import ContactForm from './ContactForm'; // Importa el componente ContactForm
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,6 +45,10 @@ function App() {
 
 
 
+            {/* Nuevas rutas agregadas */}
+            <Route path="/chatbot" element={<Chatbot />} /> {/* Ruta para Chatbot */}
+            <Route path="/contact" element={<ContactForm />} /> {/* Ruta para ContactForm */}
+
             {/* Rutas protegidas */}
             <Route path="/bibliotecadearchivos" element={
               <ProtectedRoute>
@@ -54,7 +60,7 @@ function App() {
                 <Profile />
               </ProtectedRoute>
             } />
-            <Route path="/pdepago" element={
+            <Route path="/pdepago" element={ 
               <ProtectedRoute>
                 <Pdepagos />
               </ProtectedRoute>

@@ -19,7 +19,7 @@ body {
     align-items: center;
     width: 100%;
     padding: 10px 20px;
-    background-color: #70CAD1;
+    background-color: #1babb6;
     color: white;
   }
   
@@ -81,13 +81,13 @@ body {
   
   .option-card button {
     padding: 10px;
-    background-color: #E0F7FA;
+    background-color: #0b707e;
     border: none;
     cursor: pointer;
   }
   
   .option-card button:hover {
-    background-color: #B2EBF2;
+    background-color: #09515a;
   }
   
   /* Footer Styles */
