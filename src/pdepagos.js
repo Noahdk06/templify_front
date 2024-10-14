@@ -59,8 +59,7 @@ const Pdepagos = () => {
         const data = await response.json();
         console.log(data);
         alert("Plan de Pago aplicado correctamente");
-      } else {
-        alert("Error al aplicar el plan de pago");
+     
       }
     } catch (error) {
       alert("Error en la solicitud");
