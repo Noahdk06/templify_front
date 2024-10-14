@@ -33,8 +33,8 @@ function FooterLayout() {
       <div className="footer-section">
         <h3>CONTACTO</h3>
         <div className="footer-contact">
-          <p>+54 (911) 2632 9703</p>
-          <p>santihola25@gmail.com</p>
+          <p>+54 (911) 4187 3255</p>
+          <p>UrielCwriembaum@gmail.com</p>
           <div className="footer-icons">
             <img src="/path-to-whatsapp-icon.png" alt="WhatsApp" />
             <img src="/path-to-instagram-icon.png" alt="Instagram" />
