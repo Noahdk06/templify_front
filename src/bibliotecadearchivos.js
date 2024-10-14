@@ -11,16 +11,25 @@ const BibliotecaDeArchivos = () => {
   const [fileFormat, setFileFormat] = useState('');
   const [fileList, setFileList] = useState([]);
 
+  // Función para obtener los archivos del usuario desde el backend
+  const fetchFiles = async () => {
+    try {
+      const token = localStorage.getItem('token'); // Obtener el token almacenado
+      const response = await axios.post(`${BACKEND_URL}/api/user/obtenerArchivos`, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}` // Enviar el token en los headers
+        }
+      });
+      
+      // Actualizar la lista de archivos con la respuesta del servidor
+      setFileList(response.data.archivos);
+    } catch (error) {
+      console.error('Error al cargar archivos:', error);
+    }
+  };
+
   useEffect(() => {
-    // Cargar archivos existentes al montar el componente
-    const fetchFiles = async () => {
-      try {
-        const result = await axios.get(`${BACKEND_URL}/api/user/listarArchivos`);
-        setFileList(result.data.files);
-      } catch (error) {
-        console.error('Error al cargar archivos:', error);
-      }
-    };
+    // Llamamos a fetchFiles cuando el componente se monta para cargar archivos existentes
     fetchFiles();
   }, []);
 
@@ -52,15 +61,17 @@ const BibliotecaDeArchivos = () => {
     formData.append('contentType', fileType); // Tipo de contenido del archivo
 
     try {
+      const token = localStorage.getItem('token'); // Obtener el token almacenado
       const response = await axios.post(`${BACKEND_URL}/api/user/cargarArchivos`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}` // Enviar el token en los headers
         },
       });
 
       console.log('Archivo subido:', response.data);
       
-      // Actualizar la lista de archivos
+      // Actualizar la lista de archivos agregando el nuevo archivo subido
       setFileList([...fileList, { name: fileName, type: fileType, format: fileFormat }]);
       setShowUploadForm(false);
       setFileName('');
@@ -73,10 +84,16 @@ const BibliotecaDeArchivos = () => {
 
   const handleDelete = async (fileToDelete) => {
     try {
+      const token = localStorage.getItem('token'); // Obtener el token almacenado
       await axios.post(`${BACKEND_URL}/api/user/eliminarArchivos`, {
         key: fileToDelete.name, // Nombre del archivo a eliminar
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}` // Enviar el token en los headers
+        }
       });
 
+      // Eliminar el archivo de la lista local después de eliminarlo del backend
       setFileList(fileList.filter(file => file !== fileToDelete));
     } catch (error) {
       console.error('Error al eliminar el archivo:', error);
@@ -91,7 +108,7 @@ const BibliotecaDeArchivos = () => {
 
       <div className="file-list">
         {fileList.length === 0 ? (
-          <p>No hay archivos subidos<a className="nolink" href="https://www.youtube.com/watch?v=Wl4bkp9H0fQ">.</a></p>
+          <p>No hay archivos subidos.</p>
         ) : (
           fileList.map((file, index) => (
             <div key={index} className="file-item">
