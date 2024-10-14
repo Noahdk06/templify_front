@@ -9,8 +9,10 @@ import Support from './Support';
 import BibliotecaDeArchivos from './bibliotecadearchivos';
 import Navbar from './navbar';
 import Profile from './Profile';
+import MetodoDePago from './metodoDePago'; // Cambiado de './MetodoDePago' a './metodoDePago'
 import Template from './Template';
 import Pdepagos from './pdepagos';
+
 import FooterLayout from './FooterLayout'; // Importa el FooterLayout
 import ProtectedRoute from './components/protectedRoute'; // Importa el ProtectedRoute
 import Unauthorized from './unauthorized'; // Importa el componente de advertencia
@@ -39,6 +41,9 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/templates" element={<TemplatesHub />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/MetodoDePago" element={<MetodoDePago />} />
+
+
 
             {/* Nuevas rutas agregadas */}
             <Route path="/chatbot" element={<Chatbot />} /> {/* Ruta para Chatbot */}
