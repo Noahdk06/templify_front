@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './pdepagos.css';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate para la redirección
 
 const Pdepagos = () => {
   const [selectedDuration, setSelectedDuration] = useState('3 Meses');
   const [showModal, setShowModal] = useState(false); // Nuevo estado para controlar el modal
+  const navigate = useNavigate(); // Hook para la navegación
 
   const prices = {
     '3 Meses': { personal: 10, startup: 22, empresa: 165, plazo: 90 },
@@ -65,6 +67,11 @@ const Pdepagos = () => {
     }
   };
 
+  const proceedToPayment = () => {
+    setShowModal(false);
+    navigate('/metodoDePago'); // Redirigir a la página de método de pago
+  };
+
   return (
     <div className="pdepagos-container">
       <section className="pricing-section">
@@ -107,14 +114,14 @@ const Pdepagos = () => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h3>Prueba gratuita</h3>
-            <p>Al proceder se acepta una suscripción al plan de prueba gratuita por una semana.</p>
+            <h3>Proceder a pagar</h3>
+            <p>Al proceder se acepta una suscripción al plan seleccionado (Personal, Start-Up o Empresa)</p>
             <p>Para más información leer políticas de servicio.</p>
             <div>
               <input type="checkbox" id="terms" />
               <label htmlFor="terms">He leído y aceptado los términos y condiciones</label>
             </div>
-            <button onClick={() => setShowModal(false)}>Continuar</button>
+            <button onClick={proceedToPayment}>Continuar</button>
           </div>
         </div>
       )}
