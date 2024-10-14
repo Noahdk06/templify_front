@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './metodoDePago.css'; 
+import { useNavigate } from 'react-router-dom';
+import './metodoDePago.css';
 
 const MetodoDePago = () => {
+  const navigate = useNavigate();
   const [cardDetails, setCardDetails] = useState({
     number: '',
     expiration: '',
@@ -20,6 +22,8 @@ const MetodoDePago = () => {
   const handlePayment = () => {
     // Aquí puedes agregar la lógica para enviar los datos al backend
     alert('Pago procesado con la tarjeta registrada.');
+    // Redirigir al usuario a la página de perfil
+    navigate('/profile');
   };
 
   return (
