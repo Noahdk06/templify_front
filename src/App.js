@@ -60,7 +60,7 @@ function App() {
                 <Profile />
               </ProtectedRoute>
             } />
-            <Route path="/pdepago" element={
+            <Route path="/pdepago" element={ 
               <ProtectedRoute>
                 <Pdepagos />
               </ProtectedRoute>
