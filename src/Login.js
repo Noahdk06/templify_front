@@ -15,12 +15,12 @@ const Login = ({ setIsLoggedIn }) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BACKEND_URL}/api/user/login`, { username, password });
-
+  
       if (response.data.success) {
-        // Guardar el token y el usuario en el localStorage
-        localStorage.setItem('token', response.data.token); // El token debería ser una cadena
-        localStorage.setItem('user', JSON.stringify(response.data.user)); // `response.data.user` es un objeto que se convierte a cadena JSON
-        
+        // Guardar el token y el objeto `user` en el localStorage
+        localStorage.setItem('token', response.data.token); // El token debe contener el id y el username
+        localStorage.setItem('user', JSON.stringify(response.data.user)); // Aquí almacenamos tanto `id` como `username`
+  
         setIsLoggedIn(true); // Actualiza el estado de autenticación
         navigate('/'); // Redirige a la página de inicio
       } else {
