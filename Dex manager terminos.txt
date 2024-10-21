@@ -21,3 +21,8 @@ En el
 npm i   
 npm run 
 npm start 
+
+
+npm install react-image-crop
+
+npm install react-rnd
