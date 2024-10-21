@@ -47,6 +47,13 @@ const Editor = () => {
     if (type === 'image') setImageUrl('');
   };
 
+  const removeElement = () => {
+    if (selectedElement) {
+      setElements(elements.filter(el => el.id !== selectedElement.id));
+      setSelectedElement(null); // Desselecciona el elemento después de eliminarlo
+    }
+  };
+
   const changeElementColor = (color) => {
     if (selectedElement) {
       setElements(
@@ -121,6 +128,8 @@ const Editor = () => {
                 return { ...el, fontStyle: el.fontStyle === 'italic' ? 'normal' : 'italic' };
               case 'underline':
                 return { ...el, textDecoration: el.textDecoration === 'underline' ? 'none' : 'underline' };
+              case 'line-through':  // Caso agregado para tachar texto
+                return { ...el, textDecoration: el.textDecoration === 'line-through' ? 'none' : 'line-through' };
               default:
                 return el;
             }
@@ -140,10 +149,10 @@ const Editor = () => {
           <button className="toolbar-button" onClick={() => changeFontSize(1)}>+</button>
         </div>
         <div className="toolbar-group">
-          <button className="toolbar-button" onClick={() => toggleTextStyle('bold')}>B</button>
-          <button className="toolbar-button" onClick={() => toggleTextStyle('italic')}>I</button>
-          <button className="toolbar-button" onClick={() => toggleTextStyle('underline')}>U</button>
-          <button className="toolbar-button">S</button>
+          <button className="toolbar-button" onClick={() => toggleTextStyle('bold')} style={{ fontWeight: 'bold' }}>B</button>
+          <button className="toolbar-button" onClick={() => toggleTextStyle('italic')} style={{ fontStyle: 'italic' }}>I</button>
+          <button className="toolbar-button" onClick={() => toggleTextStyle('underline')} style={{ textDecoration: 'underline' }}>U</button>
+          <button className="toolbar-button" onClick={() => toggleTextStyle('line-through')} style={{ textDecoration: 'line-through' }}>S</button>
         </div>
         <div className="toolbar-group">
           <div className="zoom-control">
@@ -153,13 +162,14 @@ const Editor = () => {
           </div>
         </div>
       </div>
-
+      
       <div className="editor-main">
         <div className="editor-sidebar">
           <button onClick={() => addElement('rect')}>Agregar Rectángulo</button>
           <button onClick={() => addElement('circle')}>Agregar Círculo</button>
           <button onClick={() => addElement('text')}>Agregar Texto</button>
           <button onClick={() => addElement('image')}>Agregar Imagen</button>
+          <button onClick={removeElement}>Eliminar Elemento</button> {/* Botón de Eliminar Elemento */}
           <div>
             <label>Color Elemento:</label>
             <input 
