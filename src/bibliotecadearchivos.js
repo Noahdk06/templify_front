@@ -23,7 +23,7 @@ const BibliotecaDeArchivos = () => {
       });
 
       // Actualizar la lista de archivos con la respuesta del servidor
-      setFileList(response.data.archivos); // Asegúrate de que 'archivos' contenga 'nombrearchivo'
+      setFileList(response.data.archivos); // Incluye 'linkarchivo' y 'nombrearchivo'
     } catch (error) {
       console.error('Error al cargar archivos:', error);
     }
@@ -50,7 +50,7 @@ const BibliotecaDeArchivos = () => {
 
     const formData = new FormData();
     const fileInput = e.target.elements.file.files[0];
-    
+
     if (!fileInput) {
       console.error('No se seleccionó ningún archivo.');
       return;
@@ -70,10 +70,15 @@ const BibliotecaDeArchivos = () => {
       });
 
       console.log('Archivo subido:', response.data);
-      
-      // Actualizar la lista de archivos agregando el nuevo archivo subido
-      setFileList([...fileList, { nombrearchivo: fileName, format: fileFormat }]); // Asegúrate de usar 'nombrearchivo'
-      
+
+      // Actualizar la lista de archivos agregando el nuevo archivo subido con la URL recibida
+      setFileList([...fileList, { 
+        id: response.data.archivoId,  // Guardar el ID del archivo
+        nombrearchivo: fileName, 
+        linkarchivo: response.data.fileUrl, 
+        format: fileFormat 
+      }]);
+
       // Cerrar el pop-up al completar la subida exitosa
       handleCancel(); // Llama a la función para cerrar y reiniciar el formulario
     } catch (error) {
@@ -84,17 +89,27 @@ const BibliotecaDeArchivos = () => {
 
   const handleDelete = async (fileToDelete) => {
     try {
-      const token = localStorage.getItem('token'); // Obtener el token almacenado
+      const token = localStorage.getItem('token');  // Obtener el token almacenado
+      console.log('Eliminando archivo con ID y Link:', fileToDelete.id, fileToDelete.linkarchivo);
+  
+      // Verifica que el linkarchivo es una URL válida
+      if (!fileToDelete.linkarchivo || !fileToDelete.linkarchivo.startsWith('https://')) {
+        console.error('El link del archivo no es válido:', fileToDelete.linkarchivo);
+        return;
+      }
+  
+      // Llamada al backend para eliminar el archivo usando el ID y el link
       await axios.post(`${BACKEND_URL}/api/user/eliminarArchivos`, {
-        key: fileToDelete.nombrearchivo, // Nombre del archivo a eliminar
+        idArchivo: fileToDelete.id,      // Enviamos el ID del archivo a eliminar
+        linkArchivo: fileToDelete.linkarchivo  // Enviamos el link del archivo para eliminarlo de S3
       }, {
         headers: {
-          'Authorization': `Bearer ${token}` // Enviar el token en los headers
+          'Authorization': `Bearer ${token}`  // Enviar el token en los headers
         }
       });
-
+  
       // Eliminar el archivo de la lista local después de eliminarlo del backend
-      setFileList(fileList.filter(file => file !== fileToDelete));
+      setFileList(fileList.filter(file => file.id !== fileToDelete.id));
     } catch (error) {
       console.error('Error al eliminar el archivo:', error);
     }
@@ -112,7 +127,19 @@ const BibliotecaDeArchivos = () => {
         ) : (
           fileList.map((file, index) => (
             <div key={index} className="file-item">
-              <span>{file.nombrearchivo} ({file.format})</span> {/* Mostrar nombre y formato */}
+              {/* Verifica si el archivo es una imagen y la muestra directamente, o si es un enlace */}
+              {file.linkarchivo && (file.linkarchivo.endsWith('.png') || file.linkarchivo.endsWith('.jpg') || file.linkarchivo.endsWith('.gif')) ? (
+                <img src={file.linkarchivo} alt={file.nombrearchivo} className="file-image" />
+              ) : (
+                // Agrega el `target="_blank"` y `rel="noopener noreferrer"` para mayor seguridad
+                <a 
+                  href={file.linkarchivo} 
+                  target="_blank" 
+                  rel="noopener noreferrer"  // Previene problemas de seguridad
+                >
+                  {file.nombrearchivo || "Archivo sin nombre"}
+                </a>
+              )}
               <button className="delete-button" onClick={() => handleDelete(file)}>✖</button>
             </div>
           ))
@@ -122,9 +149,6 @@ const BibliotecaDeArchivos = () => {
       {showUploadForm && (
         <div className="upload-form-overlay">
           <form className="upload-form" onSubmit={handleFileSubmit}>
-            <div className="file-icon">
-              {/* Icono de archivo, puede usar FontAwesome o una imagen */}
-            </div>
             <label>
               Nombre:
               <input

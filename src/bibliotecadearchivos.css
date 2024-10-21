@@ -40,6 +40,14 @@
     align-items: center;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
   }
+
+  .file-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+  }
+  
   
   .nolink{
     text-decoration: none;
