@@ -7,8 +7,6 @@ const BACKEND_URL = 'http://localhost:3033';
 const BibliotecaDeArchivos = () => {
   const [showUploadForm, setShowUploadForm] = useState(false);
   const [fileName, setFileName] = useState('');  // Nombre del archivo
-  const [fileType, setFileType] = useState('');
-  const [fileFormat, setFileFormat] = useState('');
   const [fileList, setFileList] = useState([]);
   const [uploadError, setUploadError] = useState(null);
 
@@ -41,8 +39,6 @@ const BibliotecaDeArchivos = () => {
   const handleCancel = () => {
     setShowUploadForm(false);
     setFileName('');
-    setFileType('');
-    setFileFormat('');
   };
 
   const handleFileSubmit = async (e) => {
@@ -58,7 +54,6 @@ const BibliotecaDeArchivos = () => {
 
     formData.append('file', fileInput);
     formData.append('key', fileName); // Nombre del archivo
-    formData.append('contentType', fileType); // Tipo de contenido del archivo
 
     try {
       const token = localStorage.getItem('token'); // Obtener el token almacenado
@@ -75,8 +70,7 @@ const BibliotecaDeArchivos = () => {
       setFileList([...fileList, { 
         id: response.data.archivoId,  // Guardar el ID del archivo
         nombrearchivo: fileName, 
-        linkarchivo: response.data.fileUrl, 
-        format: fileFormat 
+        linkarchivo: response.data.fileUrl 
       }]);
 
       // Cerrar el pop-up al completar la subida exitosa
@@ -127,19 +121,8 @@ const BibliotecaDeArchivos = () => {
         ) : (
           fileList.map((file, index) => (
             <div key={index} className="file-item">
-              {/* Verifica si el archivo es una imagen y la muestra directamente, o si es un enlace */}
-              {file.linkarchivo && (file.linkarchivo.endsWith('.png') || file.linkarchivo.endsWith('.jpg') || file.linkarchivo.endsWith('.gif')) ? (
-                <img src={file.linkarchivo} alt={file.nombrearchivo} className="file-image" />
-              ) : (
-                // Agrega el `target="_blank"` y `rel="noopener noreferrer"` para mayor seguridad
-                <a 
-                  href={file.linkarchivo} 
-                  target="_blank" 
-                  rel="noopener noreferrer"  // Previene problemas de seguridad
-                >
-                  {file.nombrearchivo || "Archivo sin nombre"}
-                </a>
-              )}
+              {/* Mostrar siempre la imagen */}
+              <img src={file.linkarchivo} alt={file.nombrearchivo} className="file-image" />
               <button className="delete-button" onClick={() => handleDelete(file)}>✖</button>
             </div>
           ))
@@ -159,25 +142,10 @@ const BibliotecaDeArchivos = () => {
               />
             </label>
             <label>
-              Tipo de archivo:
-              <select
-                value={fileFormat}
-                onChange={(e) => setFileFormat(e.target.value)}
-                required
-              >
-                <option value="">Seleccionar</option>
-                <option value="GIF">GIF</option>
-                <option value="PNG">PNG</option>
-                <option value="MP4">MP4</option>
-                <option value="JPG">JPG</option>
-              </select>
-            </label>
-            <label>
               Archivo:
               <input
                 type="file"
                 name="file"
-                onChange={(e) => setFileType(e.target.files[0]?.type)}
                 required
               />
             </label>
