@@ -1,37 +1,100 @@
 .editor-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .editor-sidebar {
-    width: 250px;
-    background-color: #f7f7f7;
-    padding: 10px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .editor-canvas {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    border: 2px dashed #007bb2;
-  }
-  
-  canvas {
-    border: 1px solid #ccc; /* Borde opcional para el canvas */
-    cursor: crosshair; /* Cambiar el cursor cuando se pinta */
-  }
-  
-  .save-button {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #007bb2;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .save-button:hover {
-    background-color: #005f8f;
-  }
-     
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #000000; /* Asegura que todo el texto en el contenedor sea negro por defecto */
+}
+
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f0f8ff;
+  border-bottom: 1px solid #d1e0e0;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #ffffff;
+  border: 1px solid #87ceeb;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #000000; /* Asegura que el texto de los botones sea negro */
+}
+
+.zoom-control {
+  display: flex;
+  align-items: center;
+}
+
+.zoom-control span {
+  margin: 0 10px;
+  color: #000000; /* Asegura que el texto del zoom sea negro */
+}
+
+.editor-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.editor-sidebar {
+  width: 200px;
+  padding: 10px;
+  background-color: #f0f8ff;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-sidebar button {
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #ffffff;
+  border: 1px solid #87ceeb;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #000000; /* Asegura que el texto de los botones sea negro */
+}
+
+.editor-sidebar div {
+  margin-bottom: 10px;
+  color: #000000; /* Asegura que el texto en la barra lateral sea negro */
+}
+
+.editor-canvas {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.save-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #ffffff; /* Mantenemos el texto del botón de guardar en blanco para contraste */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+
+/* Aseguramos que el texto en los elementos editables sea siempre negro */
+.editor-canvas input[type="text"] {
+  color: #000000 !important;
+}
