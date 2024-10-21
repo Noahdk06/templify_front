@@ -1,0 +1,37 @@
+.editor-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .editor-sidebar {
+    width: 250px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .editor-canvas {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border: 2px dashed #007bb2;
+  }
+  
+  canvas {
+    border: 1px solid #ccc; /* Borde opcional para el canvas */
+    cursor: crosshair; /* Cambiar el cursor cuando se pinta */
+  }
+  
+  .save-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007bb2;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .save-button:hover {
+    background-color: #005f8f;
+  }
+  

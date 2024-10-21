@@ -9,15 +9,15 @@ import Support from './Support';
 import BibliotecaDeArchivos from './bibliotecadearchivos';
 import Navbar from './navbar';
 import Profile from './Profile';
-import MetodoDePago from './metodoDePago'; // Cambiado de './MetodoDePago' a './metodoDePago'
-import Template from './Template';
+import MetodoDePago from './metodoDePago'; 
+import Editor from './Editor'; // Importamos el nuevo archivo Editor
 import Pdepagos from './pdepagos';
 
-import FooterLayout from './FooterLayout'; // Importa el FooterLayout
-import ProtectedRoute from './components/protectedRoute'; // Importa el ProtectedRoute
-import Unauthorized from './unauthorized'; // Importa el componente de advertencia
-import Chatbot from './Chatbot'; // Importa el componente Chatbot
-import ContactForm from './ContactForm'; // Importa el componente ContactForm
+import FooterLayout from './FooterLayout'; 
+import ProtectedRoute from './components/protectedRoute';
+import Unauthorized from './unauthorized';
+import Chatbot from './Chatbot'; 
+import ContactForm from './ContactForm'; 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,9 +32,9 @@ function App() {
 
   return (
     <Router>
-      <div className="app-container"> {/* Cambié la clase a app-container */}
+      <div className="app-container">
         <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-        <div className="content-container"> {/* Añadí este contenedor para el contenido */}
+        <div className="content-container">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
@@ -43,11 +43,9 @@ function App() {
             <Route path="/support" element={<Support />} />
             <Route path="/MetodoDePago" element={<MetodoDePago />} />
 
-
-
-            {/* Nuevas rutas agregadas */}
-            <Route path="/chatbot" element={<Chatbot />} /> {/* Ruta para Chatbot */}
-            <Route path="/contact" element={<ContactForm />} /> {/* Ruta para ContactForm */}
+            {/* Nuevas rutas */}
+            <Route path="/chatbot" element={<Chatbot />} />
+            <Route path="/contact" element={<ContactForm />} />
 
             {/* Rutas protegidas */}
             <Route path="/bibliotecadearchivos" element={
@@ -66,13 +64,14 @@ function App() {
               </ProtectedRoute>
             } />
 
-            <Route path="/template/:id" element={<Template />} />
+            {/* Cambiamos Template por Editor */}
+            <Route path="/template/:id" element={<Editor />} />
 
             {/* Ruta de advertencia por acceso no autorizado */}
             <Route path="/unauthorized" element={<Unauthorized />} />
           </Routes>
         </div>
-        <FooterLayout /> {/* Footer */}
+        <FooterLayout />
       </div>
     </Router>
   );
