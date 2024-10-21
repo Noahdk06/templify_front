@@ -1,11 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importamos Link
 import './Templatehub.css'; // Asegúrate de que el archivo CSS esté en la misma carpeta
- // Verifica el nombre del archivo y la ruta
 
 const TemplatesHub = () => {
   return (
     <div className="templates-hub">
-
       <Header />
       <Main />
     </div>
@@ -23,8 +22,8 @@ const Header = () => {
 
 const Main = () => {
   const sections = [
-    { title: 'Publicidad', images: [...Array(4)].map((_, i) => `image${i+1}.jpg`) },
-    { title: 'Productos', images: [...Array(4)].map((_, i) => `image${i+1}.jpg`) }
+    { title: 'Publicidad', images: [...Array(4)].map((_, i) => ({ src: `image${i+1}.jpg`, id: i + 1 })) },
+    { title: 'Productos', images: [...Array(4)].map((_, i) => ({ src: `image${i+1}.jpg`, id: i + 5 })) }
   ];
 
   return (
@@ -43,8 +42,10 @@ const Section = ({ title, images }) => {
     <section className="templates-section">
       <h2 className="section-title">{title}</h2>
       <div className="images">
-        {images.map((src, index) => (
-          <img key={index} src={src} alt={title} className="template-image" />
+        {images.map((image, index) => (
+          <Link to={`/template/${image.id}`} key={index}> {/* Link que dirige a la página del editor */}
+            <img src={image.src} alt={title} className="template-image" />
+          </Link>
         ))}
       </div>
     </section>
