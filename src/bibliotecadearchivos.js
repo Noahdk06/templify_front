@@ -34,11 +34,13 @@ const BibliotecaDeArchivos = () => {
 
   const handleFileUploadClick = () => {
     setShowUploadForm(true);
+    setUploadError(null); // Reiniciar el error al abrir el formulario
   };
 
   const handleCancel = () => {
     setShowUploadForm(false);
     setFileName('');
+    setUploadError(null); // Reiniciar el error al cerrar el formulario
   };
 
   const handleFileSubmit = async (e) => {
@@ -47,8 +49,16 @@ const BibliotecaDeArchivos = () => {
     const formData = new FormData();
     const fileInput = e.target.elements.file.files[0];
 
+    // Validar que se haya seleccionado un archivo
     if (!fileInput) {
-      console.error('No se seleccionó ningún archivo.');
+      setUploadError('No se seleccionó ningún archivo.');
+      return;
+    }
+
+    // Validar tipos de archivo permitidos
+    const validTypes = ['image/jpeg', 'image/png', 'video/mp4', 'image/gif'];
+    if (!validTypes.includes(fileInput.type)) {
+      setUploadError('Tipo de archivo no permitido. Selecciona JPG, PNG, MP4 o GIF.');
       return;
     }
 
@@ -74,11 +84,17 @@ const BibliotecaDeArchivos = () => {
       }]);
 
       // Cerrar el pop-up al completar la subida exitosa
-      handleCancel(); // Llama a la función para cerrar y reiniciar el formulario
+      handleCancel();
     } catch (error) {
       console.error('Error al cargar el archivo:', error);
       setUploadError('Error al cargar el archivo. Intenta de nuevo.');
     }
+  };
+
+  // Extraer el `key` correcto del `linkarchivo`
+  const getKeyFromUrl = (linkarchivo) => {
+    const urlParts = linkarchivo.split('.amazonaws.com/');
+    return urlParts.length > 1 ? urlParts[1] : null;
   };
 
   const handleDelete = async (fileToDelete) => {
@@ -86,16 +102,17 @@ const BibliotecaDeArchivos = () => {
       const token = localStorage.getItem('token');  // Obtener el token almacenado
       console.log('Eliminando archivo con ID y Link:', fileToDelete.id, fileToDelete.linkarchivo);
   
-      // Verifica que el linkarchivo es una URL válida
-      if (!fileToDelete.linkarchivo || !fileToDelete.linkarchivo.startsWith('https://')) {
-        console.error('El link del archivo no es válido:', fileToDelete.linkarchivo);
+      const key = getKeyFromUrl(fileToDelete.linkarchivo); // Extraemos el key del link
+  
+      if (!key) {
+        console.error('Error: no se pudo obtener el key del archivo para eliminarlo.');
         return;
       }
   
-      // Llamada al backend para eliminar el archivo usando el ID y el link
+      // Llamada al backend para eliminar el archivo usando el ID y el key
       await axios.post(`${BACKEND_URL}/api/user/eliminarArchivos`, {
         idArchivo: fileToDelete.id,      // Enviamos el ID del archivo a eliminar
-        linkArchivo: fileToDelete.linkarchivo  // Enviamos el link del archivo para eliminarlo de S3
+        linkArchivo: key  // Enviamos el key del archivo para eliminarlo de S3
       }, {
         headers: {
           'Authorization': `Bearer ${token}`  // Enviar el token en los headers
@@ -121,7 +138,6 @@ const BibliotecaDeArchivos = () => {
         ) : (
           fileList.map((file, index) => (
             <div key={index} className="file-item">
-              {/* Mostrar siempre la imagen */}
               <img src={file.linkarchivo} alt={file.nombrearchivo} className="file-image" />
               <button className="delete-button" onClick={() => handleDelete(file)}>✖</button>
             </div>

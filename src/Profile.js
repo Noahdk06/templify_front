@@ -12,7 +12,7 @@ const Profile = () => {
     plan: '',
     telefono: '',
   });
-  
+
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [editMode, setEditMode] = useState({
     nombre: false,
@@ -21,6 +21,7 @@ const Profile = () => {
     plan: false,
     telefono: false,
   });
+
   const [formData, setFormData] = useState({
     nombre: { value: '', password: '' },
     correo: { value: '', password: '' },
@@ -29,6 +30,7 @@ const Profile = () => {
     telefono: { value: '', password: '' },
   });
 
+  // Obtener los datos del perfil y cargar la imagen de perfil al recargar la página
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,6 +56,8 @@ const Profile = () => {
             plan: response.data.plan,
             telefono: response.data.telefono,
           });
+
+          // Asegurarse de que el URL de la imagen esté correctamente cargado
           setProfileImageUrl(response.data.fotoperfil || null);
         } else {
           console.error('Error al obtener los datos del perfil:', response.data.message);
@@ -66,17 +70,18 @@ const Profile = () => {
     fetchData();
   }, []);
 
+  // Función para subir la imagen de perfil
   const handleProfileImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file || !['image/jpeg', 'image/png'].includes(file.type)) {
       console.error('Solo se permiten archivos JPG o PNG.');
       return;
     }
-
+  
     const data = new FormData();
     data.append('file', file);
-    data.append('key', 'profile');
-
+    data.append('key', 'profile'); // Aseguramos que el key sea 'profile'
+  
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(`${BACKEND_URL}/api/user/cargarArchivos`, data, {
@@ -90,7 +95,9 @@ const Profile = () => {
       console.error('Error al subir la imagen de perfil:', error);
     }
   };
+  
 
+  // Función para eliminar la imagen de perfil
   const handleProfileImageDelete = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -102,7 +109,7 @@ const Profile = () => {
       });
 
       setProfileImageUrl(null);
-      document.getElementById('profile-image-input').value = "";
+      document.getElementById('profile-image-input').value = ""; // Limpiar el input de archivo
     } catch (error) {
       console.error('Error al eliminar la imagen de perfil:', error);
     }
@@ -159,6 +166,7 @@ const Profile = () => {
     }));
   };
 
+  // Formulario de edición
   const renderEditForm = (field, placeholder) => (
     <div className="inline-form">
       <input
@@ -186,6 +194,7 @@ const Profile = () => {
     </div>
   );
 
+  // Contar el número de formularios en modo edición para ajustar el estilo
   const editCount = Object.values(editMode).filter(Boolean).length;
 
   return (
