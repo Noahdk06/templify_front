@@ -1,17 +1,21 @@
+/* Contenedor principal */
 .editor-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  font-family: Arial, sans-serif;
-  color: #000000; /* Asegura que todo el texto en el contenedor sea negro por defecto */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333; /* Color de texto oscuro para mejor contraste */
+  background-color: #f9fafc; /* Fondo general más claro */
 }
 
+/* Barra de herramientas superior */
 .editor-toolbar {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  background-color: #f0f8ff;
-  border-bottom: 1px solid #d1e0e0;
+  padding: 12px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e6ed;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil para un efecto de elevación */
 }
 
 .toolbar-group {
@@ -20,13 +24,19 @@
 }
 
 .toolbar-button {
-  margin: 0 5px;
-  padding: 5px 10px;
-  background-color: #ffffff;
-  border: 1px solid #87ceeb;
-  border-radius: 3px;
+  margin: 0 6px;
+  padding: 6px 12px;
+  background-color: #f0f5ff; /* Fondo suave para los botones */
+  border: 1px solid #b0c7ed;
+  border-radius: 4px;
   cursor: pointer;
-  color: #000000; /* Asegura que el texto de los botones sea negro */
+  color: #333;
+  transition: background-color 0.2s, transform 0.1s; /* Transición suave para el hover */
+}
+
+.toolbar-button:hover {
+  background-color: #d6e4ff;
+  transform: translateY(-2px); /* Efecto de elevación en hover */
 }
 
 .zoom-control {
@@ -36,42 +46,67 @@
 
 .zoom-control span {
   margin: 0 10px;
-  color: #000000; /* Asegura que el texto del zoom sea negro */
+  font-weight: 500;
 }
 
+/* Área principal */
 .editor-main {
   display: flex;
   flex: 1;
   overflow: hidden;
 }
 
+/* Barra lateral */
 .editor-sidebar {
-  width: 200px;
-  padding: 10px;
-  background-color: #f0f8ff;
+  width: 220px;
+  padding: 15px;
+  background-color: #f8f9fc;
+  border-right: 1px solid #e0e6ed;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }
 
 .editor-sidebar button {
-  margin-bottom: 10px;
-  padding: 5px;
-  background-color: #ffffff;
-  border: 1px solid #87ceeb;
-  border-radius: 3px;
+  margin-bottom: 12px;
+  padding: 8px;
+  background-color: #f0f5ff;
+  border: 1px solid #b0c7ed;
+  border-radius: 4px;
+  color: #333;
   cursor: pointer;
-  color: #000000; /* Asegura que el texto de los botones sea negro */
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.editor-sidebar button:hover {
+  background-color: #d6e4ff;
+  transform: translateY(-2px);
 }
 
 .editor-sidebar div {
   margin-bottom: 10px;
-  color: #000000; /* Asegura que el texto en la barra lateral sea negro */
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
 }
 
+.editor-sidebar input[type="color"] {
+  margin-left: 5px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+/* Área de canvas */
 .editor-canvas {
   flex: 1;
   position: relative;
   overflow: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05); /* Sombra interna */
 }
 
 canvas {
@@ -80,21 +115,85 @@ canvas {
   left: 0;
 }
 
+/* Botón de guardar */
 .save-button {
   margin-top: 10px;
   padding: 10px 20px;
   background-color: #4CAF50;
-  color: #ffffff; /* Mantenemos el texto del botón de guardar en blanco para contraste */
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
 }
 
 .save-button:hover {
   background-color: #45a049;
 }
 
-/* Aseguramos que el texto en los elementos editables sea siempre negro */
+/* Biblioteca de archivos */
+.file-library {
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.file-library h3 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.file-library ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.file-library li {
+  margin-bottom: 8px;
+}
+
+.file-library button {
+  padding: 8px;
+  background-color: #f0f5ff;
+  border: 1px solid #b0c7ed;
+  border-radius: 4px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.file-library button:hover {
+  background-color: #d6e4ff;
+}
+
+.file-library button.close-button {
+  padding: 5px 10px;
+  background-color: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  transition: background-color 0.2s;
+}
+
+.file-library button.close-button:hover {
+  background-color: #e04343;
+}
+
+/* Text style for editable elements */
 .editor-canvas input[type="text"] {
-  color: #000000 !important;
+  color: #333 !important;
+  font-weight: 500;
 }
