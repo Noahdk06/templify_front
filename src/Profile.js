@@ -35,38 +35,40 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const user = JSON.parse(localStorage.getItem('user'));
-
-        if (!token || !user?.id) {
-          console.error('No se ha iniciado sesión o falta el ID de usuario.');
-          return;
-        }
-
-        const response = await axios.get(`${BACKEND_URL}/api/user/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        
+        // Obtener los datos del perfil
+        const profileResponse = await axios.get(`${BACKEND_URL}/api/user/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
-
-        if (response.status === 200) {
+  
+        if (profileResponse.status === 200) {
           setUserData({
-            nombre: response.data.nombre,
-            correo: response.data.correo,
-            empresa: response.data.empresa,
-            plan: response.data.plan,
-            telefono: response.data.telefono,
+            nombre: profileResponse.data.nombre,
+            correo: profileResponse.data.correo,
+            empresa: profileResponse.data.empresa,
+            plan: profileResponse.data.plan,
+            telefono: profileResponse.data.telefono,
           });
-
-          // Asegurarse de que el URL de la imagen esté correctamente cargado
-          setProfileImageUrl(response.data.fotoperfil || null);
         } else {
-          console.error('Error al obtener los datos del perfil:', response.data.message);
+          console.error('Error al obtener los datos del perfil:', profileResponse.data.message);
         }
+  
+        // Obtener la foto de perfil
+        const fotoPerfilResponse = await axios.get(`${BACKEND_URL}/api/user/obtenerFotoPerfil`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+  
+        if (fotoPerfilResponse.status === 200) {
+          setProfileImageUrl(fotoPerfilResponse.data.fotoperfil || null);
+        } else {
+          console.error('Error al obtener la foto de perfil:', fotoPerfilResponse.data.message);
+        }
+        
       } catch (error) {
         console.error('Error al obtener los datos del perfil:', error.message || error.response.data);
       }
     };
-
+  
     fetchData();
   }, []);
 
