@@ -7,7 +7,7 @@ const BACKEND_URL = 'http://localhost:3033';
 const Profile = () => {
   const [userData, setUserData] = useState({
     nombre: '',
-    correo: '',
+    mail: '',
     empresa: '',
     plan: '',
     telefono: '',
@@ -17,7 +17,7 @@ const Profile = () => {
   const [imageUpdateCounter, setImageUpdateCounter] = useState(0); // Contador para forzar actualización de imagen
   const [editMode, setEditMode] = useState({
     nombre: false,
-    correo: false,
+    mail: false,
     empresa: false,
     plan: false,
     telefono: false,
@@ -25,7 +25,7 @@ const Profile = () => {
 
   const [formData, setFormData] = useState({
     nombre: { value: '', password: '' },
-    correo: { value: '', password: '' },
+    mail: { value: '', password: '' },
     empresa: { value: '', password: '' },
     plan: { value: '', password: '' },
     telefono: { value: '', password: '' },
@@ -45,7 +45,7 @@ const Profile = () => {
         if (profileResponse.status === 200) {
           setUserData({
             nombre: profileResponse.data.nombre,
-            correo: profileResponse.data.correo,
+            mail: profileResponse.data.mail,
             empresa: profileResponse.data.empresa,
             plan: profileResponse.data.plan,
             telefono: profileResponse.data.telefono,
@@ -137,10 +137,14 @@ const Profile = () => {
   };
 
   const handleEditClick = (field) => {
-    setEditMode((prevEditMode) => ({
-      ...prevEditMode,
-      [field]: !prevEditMode[field],
-    }));
+    setEditMode({
+      nombre: false,
+      mail: false,
+      empresa: false,
+      plan: false,
+      telefono: false,
+      [field]: true
+    });
   };
 
   const handleInputChange = (e, field) => {
@@ -263,12 +267,12 @@ const Profile = () => {
           )}
         </div>
         <div className="info-row">
-          <strong>Correo:</strong>
-          <span>{userData.correo || 'No disponible'}</span>
-          {editMode.correo ? (
-            renderEditForm('correo', 'Nuevo correo')
+          <strong>Mail:</strong>
+          <span>{userData.mail || 'No disponible'}</span>
+          {editMode.mail ? (
+            renderEditForm('mail', 'Nuevo mail')
           ) : (
-            <button className="edit-button" onClick={() => handleEditClick('correo')}>Editar</button>
+            <button className="edit-button" onClick={() => handleEditClick('mail')}>Editar</button>
           )}
         </div>
         <div className="info-row">
