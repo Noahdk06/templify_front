@@ -13,15 +13,13 @@ const BibliotecaDeArchivos = () => {
   // Función para obtener los archivos del usuario desde el backend
   const fetchFiles = async () => {
     try {
-      const token = localStorage.getItem('token'); // Obtener el token almacenado
-      const response = await axios.post(`${BACKEND_URL}/api/user/obtenerArchivos`, {}, {
-        headers: {
-          'Authorization': `Bearer ${token}` // Enviar el token en los headers
-        }
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/api/user/obtenerArchivos`, {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
 
-      // Actualizar la lista de archivos con la respuesta del servidor
-      setFileList(response.data.archivos); // Incluye 'linkarchivo' y 'nombrearchivo'
+      // Actualizar la lista de archivos con los datos recibidos del servidor
+      setFileList(response.data.archivos); // Lista de archivos con link y nombre
     } catch (error) {
       console.error('Error al cargar archivos:', error);
     }
@@ -99,23 +97,23 @@ const BibliotecaDeArchivos = () => {
 
   const handleDelete = async (fileToDelete) => {
     try {
-      const token = localStorage.getItem('token');  // Obtener el token almacenado
+      const token = localStorage.getItem('token');
       console.log('Eliminando archivo con ID y Link:', fileToDelete.id, fileToDelete.linkarchivo);
   
-      const key = getKeyFromUrl(fileToDelete.linkarchivo); // Extraemos el key del link
-  
+      const key = getKeyFromUrl(fileToDelete.linkarchivo);
       if (!key) {
         console.error('Error: no se pudo obtener el key del archivo para eliminarlo.');
         return;
       }
   
-      // Llamada al backend para eliminar el archivo usando el ID y el key
-      await axios.post(`${BACKEND_URL}/api/user/eliminarArchivos`, {
-        idArchivo: fileToDelete.id,      // Enviamos el ID del archivo a eliminar
-        linkArchivo: key  // Enviamos el key del archivo para eliminarlo de S3
-      }, {
+      // Llamada al backend para eliminar el archivo usando el método DELETE
+      await axios.delete(`${BACKEND_URL}/api/user/eliminarArchivo`, {
+        data: {
+          idArchivo: fileToDelete.id,
+          linkArchivo: key // Enviar `key` extraído al backend
+        },
         headers: {
-          'Authorization': `Bearer ${token}`  // Enviar el token en los headers
+          'Authorization': `Bearer ${token}`
         }
       });
   

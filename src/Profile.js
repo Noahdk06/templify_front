@@ -14,6 +14,7 @@ const Profile = () => {
   });
 
   const [profileImageUrl, setProfileImageUrl] = useState(null);
+  const [imageUpdateCounter, setImageUpdateCounter] = useState(0); // Contador para forzar actualización de imagen
   const [editMode, setEditMode] = useState({
     nombre: false,
     correo: false,
@@ -35,40 +36,44 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const user = JSON.parse(localStorage.getItem('user'));
-
-        if (!token || !user?.id) {
-          console.error('No se ha iniciado sesión o falta el ID de usuario.');
-          return;
-        }
-
-        const response = await axios.get(`${BACKEND_URL}/api/user/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        
+        // Obtener los datos del perfil
+        const profileResponse = await axios.get(`${BACKEND_URL}/api/user/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
 
-        if (response.status === 200) {
+        if (profileResponse.status === 200) {
           setUserData({
-            nombre: response.data.nombre,
-            correo: response.data.correo,
-            empresa: response.data.empresa,
-            plan: response.data.plan,
-            telefono: response.data.telefono,
+            nombre: profileResponse.data.nombre,
+            correo: profileResponse.data.correo,
+            empresa: profileResponse.data.empresa,
+            plan: profileResponse.data.plan,
+            telefono: profileResponse.data.telefono,
           });
-
-          // Asegurarse de que el URL de la imagen esté correctamente cargado
-          setProfileImageUrl(response.data.fotoperfil || null);
         } else {
-          console.error('Error al obtener los datos del perfil:', response.data.message);
+          console.error('Error al obtener los datos del perfil:', profileResponse.data.message);
         }
+
+        // Obtener la foto de perfil con un parámetro único para evitar caché
+        const fotoPerfilResponse = await axios.get(`${BACKEND_URL}/api/user/obtenerFotoPerfil`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (fotoPerfilResponse.status === 200 && fotoPerfilResponse.data.fotoperfil) {
+          // Añadir el contador como parámetro para evitar la caché
+          setProfileImageUrl(`${fotoPerfilResponse.data.fotoperfil}?t=${imageUpdateCounter}`);
+        } else {
+          setProfileImageUrl(null); // Asegurarse de que no hay URL si no existe la foto de perfil
+          console.error('Error al obtener la foto de perfil:', fotoPerfilResponse.data.message);
+        }
+        
       } catch (error) {
         console.error('Error al obtener los datos del perfil:', error.message || error.response.data);
       }
     };
 
     fetchData();
-  }, []);
+  }, [imageUpdateCounter]); // Ejecutar cada vez que el contador cambia
 
   // Función para subir la imagen de perfil
   const handleProfileImageUpload = async (event) => {
@@ -90,26 +95,42 @@ const Profile = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setProfileImageUrl(response.data.fileUrl);
+
+      // Limpia temporalmente el estado antes de actualizar para forzar el re-renderizado
+      setProfileImageUrl(null);
+      setTimeout(() => {
+        setProfileImageUrl(`${response.data.fileUrl}?t=${new Date().getTime()}`);
+      }, 100);
+
+      // Incrementa el contador para asegurar un cambio en `useEffect`
+      setImageUpdateCounter((prevCount) => prevCount + 1);
     } catch (error) {
       console.error('Error al subir la imagen de perfil:', error);
     }
   };
   
-
   // Función para eliminar la imagen de perfil
   const handleProfileImageDelete = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${BACKEND_URL}/api/user/eliminarArchivos`, {
-        nombreArchivo: 'profile',
-        linkArchivo: profileImageUrl,
+  
+      // Extraer el `key` del archivo
+      const key = profileImageUrl.split('.amazonaws.com/')[1];
+      if (!key) {
+        console.error("Error: No se pudo obtener el key del archivo para eliminarlo.");
+        return;
+      }
+  
+      await axios.post(`${BACKEND_URL}/api/user/eliminarFotoPerfil`, {
+        linkArchivo: key,  // Enviar solo el `key` al backend
       }, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
+      // Actualizar el estado para reflejar que no hay foto de perfil
       setProfileImageUrl(null);
       document.getElementById('profile-image-input').value = ""; // Limpiar el input de archivo
+  
     } catch (error) {
       console.error('Error al eliminar la imagen de perfil:', error);
     }
