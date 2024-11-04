@@ -7,7 +7,7 @@ const BACKEND_URL = 'http://localhost:3033';
 const Profile = () => {
   const [userData, setUserData] = useState({
     nombre: '',
-    correo: '',
+    mail: '',
     empresa: '',
     plan: '',
     telefono: '',
@@ -17,18 +17,18 @@ const Profile = () => {
   const [imageUpdateCounter, setImageUpdateCounter] = useState(0); // Contador para forzar actualización de imagen
   const [editMode, setEditMode] = useState({
     nombre: false,
-    correo: false,
+    mail: false,
     empresa: false,
     plan: false,
     telefono: false,
   });
 
   const [formData, setFormData] = useState({
-    nombre: { value: '', password: '' },
-    correo: { value: '', password: '' },
-    empresa: { value: '', password: '' },
-    plan: { value: '', password: '' },
-    telefono: { value: '', password: '' },
+    nombre: '',
+    mail: '',
+    empresa: '',
+    plan: '',
+    telefono: '',
   });
 
   // Obtener los datos del perfil y cargar la imagen de perfil al recargar la página
@@ -45,7 +45,7 @@ const Profile = () => {
         if (profileResponse.status === 200) {
           setUserData({
             nombre: profileResponse.data.nombre,
-            correo: profileResponse.data.correo,
+            mail: profileResponse.data.mail,
             empresa: profileResponse.data.empresa,
             plan: profileResponse.data.plan,
             telefono: profileResponse.data.telefono,
@@ -137,27 +137,31 @@ const Profile = () => {
   };
 
   const handleEditClick = (field) => {
-    setEditMode((prevEditMode) => ({
-      ...prevEditMode,
-      [field]: !prevEditMode[field],
-    }));
+    setEditMode({
+      nombre: false,
+      mail: false,
+      empresa: false,
+      plan: false,
+      telefono: false,
+      [field]: true
+    });
   };
 
   const handleInputChange = (e, field) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setFormData({
       ...formData,
-      [field]: { ...formData[field], [name]: value },
+      [field]: value,
     });
   };
 
   const handleSaveClick = async (field) => {
     try {
       const token = localStorage.getItem('token');
-      const { value, password } = formData[field];
+      const value = formData[field];
       const response = await axios.patch(
         `${BACKEND_URL}/api/user/updateProfile`,
-        { field, value, password },
+        { field, value },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -169,10 +173,10 @@ const Profile = () => {
         setEditMode({ ...editMode, [field]: false });
         setUserData({ ...userData, [field]: value });
       } else {
-        console.error(`Error updating ${field}:`, response.data.message);
+        console.error(`Error al actualizar ${field}:`, response.data.message);
       }
     } catch (error) {
-      console.error(`Error updating ${field}:`, error.response ? error.response.data : error.message);
+      console.error(`Error al actualizar ${field}:`, error.response ? error.response.data : error.message);
     }
   };
 
@@ -183,7 +187,7 @@ const Profile = () => {
     }));
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [field]: { value: '', password: '' },
+      [field]: '',
     }));
   };
 
@@ -193,17 +197,9 @@ const Profile = () => {
       <input
         type="text"
         name="value"
-        value={formData[field].value}
+        value={formData[field]}
         onChange={(e) => handleInputChange(e, field)}
         placeholder={placeholder}
-        className="input-field"
-      />
-      <input
-        type="password"
-        name="password"
-        value={formData[field].password}
-        onChange={(e) => handleInputChange(e, field)}
-        placeholder="Contraseña"
         className="input-field"
       />
       <button className="save-button" onClick={() => handleSaveClick(field)}>
@@ -263,12 +259,12 @@ const Profile = () => {
           )}
         </div>
         <div className="info-row">
-          <strong>Correo:</strong>
-          <span>{userData.correo || 'No disponible'}</span>
-          {editMode.correo ? (
-            renderEditForm('correo', 'Nuevo correo')
+          <strong>Mail:</strong>
+          <span>{userData.mail || 'No disponible'}</span>
+          {editMode.mail ? (
+            renderEditForm('mail', 'Nuevo mail')
           ) : (
-            <button className="edit-button" onClick={() => handleEditClick('correo')}>Editar</button>
+            <button className="edit-button" onClick={() => handleEditClick('mail')}>Editar</button>
           )}
         </div>
         <div className="info-row">
