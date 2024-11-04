@@ -1,27 +1,9 @@
+/* pdepagos.css */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f0f0f0;
-}
-
-nav ul {
-  list-style-type: none;
-  background-color: #60b3ac;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  margin: 0;
-}
-
-nav ul li {
-  display: inline;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
 }
 
 .pricing-section {
@@ -45,29 +27,25 @@ nav ul li a {
   margin-top: 20px;
 }
 
-.duration-btn-wrapper {
-  display: flex;
-  align-items: center;
-  margin: 0 10px;
-}
-
 .duration-btn {
-  background-color: white;
+  background-color: #ffffff;
+  color: #4ba5ab;
   border: 1px solid #4ba5ab;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 20px;
+  margin: 0 5px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .duration-btn.active {
   background-color: #4ba5ab;
-  color: white;
+  color: #ffffff;
 }
 
-.price-label {
-  margin-left: 10px;
-  font-weight: bold;
-  color: #4ba5ab;
+.duration-btn:hover {
+  background-color: #4ba5ab;
+  color: #ffffff;
 }
 
 .pdepagos {
@@ -83,24 +61,37 @@ nav ul li a {
   width: 25%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  text-align: center;
+}
+
+.plan.active-plan {
+  border: 2px solid #4ba5ab;
+  background-color: #e0f7fa;
 }
 
 .plan h2 {
   color: #4ba5ab;
 }
 
-.plan ul {
-  list-style-type: none;
-  padding: 0;
+.active-badge {
+  background-color: #4ba5ab;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-left: 5px;
 }
 
-.plan ul li {
-  padding: 5px 0;
+.plan-details p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #555;
 }
 
-.plan p {
+.plan-price {
   font-size: 18px;
   font-weight: bold;
+  color: #333;
 }
 
 .plan button {
@@ -108,44 +99,24 @@ nav ul li a {
   border: none;
   color: white;
   padding: 10px 20px;
-  margin: 10px 0;
   cursor: pointer;
   border-radius: 5px;
+  margin-top: 15px;
 }
 
-.footer-section {
-  background-color: #222;
-  color: white;
-  padding: 20px 0;
-  text-align: center;
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-around;
-}
-
-.trusted-companies, .contact-info {
-  text-align: center;
-}
-
-/* --- Modal Styles (agregados y ajustados) --- */
-
-/* Opacidad de fondo al 20% */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8); /* Fondo oscuro con más opacidad */
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-/* Estilos del modal */
 .modal {
   background-color: white;
   padding: 20px;
@@ -153,38 +124,56 @@ nav ul li a {
   max-width: 400px;
   width: 100%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1001;
   text-align: center;
   position: relative;
 }
 
-/* Resto de estilos del modal */
-.modal h2 {
-  color: #4CAF50; /* Color similar al botón verde */
+.modal-content h3 {
+  color: #4ba5ab;
 }
 
-.modal p {
-  margin: 20px 0;
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
 .modal button {
-  background-color: #4CAF50;
+  background-color: #4ba5ab;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .modal button:hover {
-  background-color: #45a049;
+  background-color: #4ba5ab;
 }
 
-.modal a {
-  color: #4CAF50;
-  text-decoration: none;
+.modal button:disabled {
+  background-color: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
 }
 
-.modal a:hover {
-  text-decoration: underline;
+.modal .modal-buttons button:first-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modal .modal-buttons button:first-child:hover {
+  background-color: #999;
+}
+
+@media (max-width: 768px) {
+  .pdepagos {
+    flex-direction: column;
+    align-items: center;
+  }
+  .plan {
+    width: 80%;
+    margin-bottom: 20px;
+  }
 }

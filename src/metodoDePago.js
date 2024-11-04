@@ -1,3 +1,4 @@
+// metodoDePago.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './metodoDePago.css';
@@ -19,11 +20,40 @@ const MetodoDePago = () => {
     });
   };
 
-  const handlePayment = () => {
-    // Aquí puedes agregar la lógica para enviar los datos al backend
+  const handlePayment = async () => {
+    // Procesa el pago (simulación)
     alert('Pago procesado con la tarjeta registrada.');
-    // Redirigir al usuario a la página de perfil
-    navigate('/profile');
+
+    // Obtener detalles del plan desde localStorage
+    const selectedPlan = JSON.parse(localStorage.getItem('selectedPlan'));
+    const token = localStorage.getItem('token');
+
+    if (!selectedPlan || !token) {
+      alert("Error: no se pudo encontrar la información del plan o el token.");
+      return;
+    }
+
+    try {
+      // Enviar solicitud al backend para activar el plan de pago
+      const response = await fetch('http://localhost:3033/api/user/seleccionarPdP', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(selectedPlan)
+      });
+
+      if (response.ok) {
+        alert("Plan de Pago activado exitosamente.");
+        navigate('/profile');
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.message}`);
+      }
+    } catch (error) {
+      alert("Error en la solicitud de activación del plan de pago.");
+    }
   };
 
   return (
