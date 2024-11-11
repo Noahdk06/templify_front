@@ -13,7 +13,7 @@ const BibliotecaDeArchivos = () => {
   // Función para obtener los archivos del usuario desde el backend
   const fetchFiles = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token'); console.log(token)
       const response = await axios.get(`${BACKEND_URL}/api/user/obtenerArchivos`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });

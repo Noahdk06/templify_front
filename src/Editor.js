@@ -10,7 +10,7 @@ const Editor = () => {
   const [elements, setElements] = useState([]);
   const [selectedElement, setSelectedElement] = useState(null);
   const [bgColor, setBgColor] = useState('#e0f7fa');
-  const [textContent, setTextContent] = useState('Texto');
+  const [textContent, setTextContent] = useState('Agregar texto');
   const [zoom, setZoom] = useState(100);
   const [fontSize, setFontSize] = useState(16);
   const [undoStack, setUndoStack] = useState([]);
@@ -25,10 +25,11 @@ const Editor = () => {
   const fetchFiles = async () => {
     setLoadingFiles(true);
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(`${BACKEND_URL}/api/user/obtenerArchivos`, {}, {
+       const token = localStorage.getItem('token'); console.log(token)
+      const response = await axios.get(`${BACKEND_URL}/api/user/obtenerArchivos`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
+
       setFileList(response.data.archivos);
       setFileError(null);
     } catch (error) {
@@ -79,6 +80,8 @@ const Editor = () => {
     addElement('image', fileUrl);
   };
 
+  
+  
   const removeElement = () => {
     if (selectedElement) {
       setElements(elements.filter(el => el.id !== selectedElement.id));
@@ -243,8 +246,9 @@ const Editor = () => {
           <button onClick={() => addElement('text')}>Agregar texto</button>
           <button onClick={removeElement}>Remover elemento</button>
           <button onClick={() => { setShowFileLibrary(true); fetchFiles(); }}>
-            {loadingFiles ? 'Loading...' : 'Seleccionar imagen'}
-          </button>
+  {loadingFiles ? 'Loading...' : 'Seleccionar imagen'}
+</button>
+
           <button onClick={exportAsHTML}>Exportar como HTML</button>
           <div>
             <label>Color de elemento:</label>
