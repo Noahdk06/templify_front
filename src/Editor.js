@@ -80,8 +80,6 @@ const Editor = () => {
     addElement('image', fileUrl);
   };
 
-  
-  
   const removeElement = () => {
     if (selectedElement) {
       setElements(elements.filter(el => el.id !== selectedElement.id));
@@ -181,7 +179,6 @@ const Editor = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [undoStack, redoStack]);
 
-  // Nueva función para exportar el diseño como HTML
   const exportAsHTML = () => {
     const htmlContent = `
       <html>
@@ -246,9 +243,8 @@ const Editor = () => {
           <button onClick={() => addElement('text')}>Agregar texto</button>
           <button onClick={removeElement}>Remover elemento</button>
           <button onClick={() => { setShowFileLibrary(true); fetchFiles(); }}>
-  {loadingFiles ? 'Loading...' : 'Seleccionar imagen'}
-</button>
-
+            {loadingFiles ? 'Loading...' : 'Seleccionar imagen'}
+          </button>
           <button onClick={exportAsHTML}>Exportar como HTML</button>
           <div>
             <label>Color de elemento:</label>
@@ -277,12 +273,14 @@ const Editor = () => {
               position={{ x: el.x, y: el.y }}
               onDragStop={(e, d) => {
                 setElements(
-                  elements.map(item => item.id === el.id ? { ...item, x: d.x, y: d.y } : item)
+                  elements.map((item) =>
+                    item.id === el.id ? { ...item, x: d.x, y: d.y } : item
+                  )
                 );
               }}
               onResizeStop={(e, direction, ref, delta, position) => {
                 setElements(
-                  elements.map(item => 
+                  elements.map((item) =>
                     item.id === el.id
                       ? { ...item, width: ref.offsetWidth, height: ref.offsetHeight, ...position }
                       : item
@@ -292,37 +290,62 @@ const Editor = () => {
               onClick={() => handleElementClick(el)}
             >
               {el.type === 'text' ? (
-                <div
-                  contentEditable
+                <textarea
+                  value={el.content}
+                  onChange={(e) => {
+                    const updatedContent = e.target.value;
+                    setElements(
+                      elements.map((item) =>
+                        item.id === el.id ? { ...item, content: updatedContent } : item
+                      )
+                    );
+                  }}
                   style={{
                     fontSize: el.fontSize,
                     fontStyle: el.fontStyle,
                     fontWeight: el.fontWeight,
                     textDecoration: el.textDecoration,
                     color: el.color,
+                    width: '100%',
+                    height: '100%',
+                    resize: 'none',
+                    border: 'none',
+                    background: 'transparent',
+                    outline: 'none',
+                    overflow: 'hidden',
+                    fontFamily: 'inherit',
+                    padding: '0',
+                    margin: '0',
+                    textAlign: 'left'
                   }}
-                >
-                  {el.content}
-                </div>
+                />
               ) : el.type === 'rect' ? (
                 <div
-                  style={{ 
-                    backgroundColor: el.color, 
-                    width: '100%', 
-                    height: '100%' 
+                  style={{
+                    backgroundColor: el.color,
+                    width: '100%',
+                    height: '100%',
                   }}
-                ></div>
+                />
               ) : el.type === 'circle' ? (
                 <div
+                  style={{
+                    backgroundColor: el.color,
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                  }}
+                />
+              ) : el.type === 'image' ? (
+                <img 
+                  src={el.url} 
+                  alt="imagen" 
                   style={{ 
-                    backgroundColor: el.color, 
                     width: '100%', 
                     height: '100%', 
-                    borderRadius: '50%' 
-                  }}
-                ></div>
-              ) : el.type === 'image' ? (
-                <img src={el.url} alt="imagen" style={{ width: '100%', height: '100%' }} />
+                    objectFit: 'contain' 
+                  }} 
+                />
               ) : null}
             </Rnd>
           ))}
