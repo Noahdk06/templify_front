@@ -171,7 +171,7 @@ const BibliotecaDeArchivos = () => {
           {uploadError && <p className="error-message">{uploadError}</p>}
         </div>
       )}
-    </div>
+    </div> 
   );
 };
 
