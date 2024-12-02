@@ -18,7 +18,7 @@ const TemplateHub = () => {
   const createTemplate = async () => {
     const nombre = prompt('Ingrese el nombre del nuevo template:');
     if (!nombre) return;
-
+  
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
@@ -28,11 +28,11 @@ const TemplateHub = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+  
       const { templateId } = response.data;
       console.log('Template creado con éxito. ID:', templateId);
-
-      // Redirigir al editor del nuevo template
+  
+      // Redirigir al editor con el ID del nuevo template
       navigate(`/template/${templateId}`);
     } catch (err) {
       console.error('Error al crear el template:', err);
