@@ -32,7 +32,7 @@ const Chatbot = () => {
 
   return (
     <div className="chatbot-container">
-      <h1 className="chatbot-header">Chatbot</h1>
+      <h1 className="chatbot-header">FAQ</h1>
       <p>Selecciona una pregunta:</p>
       <ul className="question-list">
         {questions.map((question, index) => (

@@ -49,6 +49,65 @@ const Editor = () => {
     }
   };
 
+  const actualizarTemplate = async () => {
+    const templateId = new URLSearchParams(window.location.search).get('id');
+  
+    if (!templateId) {
+      alert('No se puede actualizar un template sin un ID válido.');
+      return;
+    }
+  
+    // Generar el contenido HTML del editor
+    const htmlContent = `
+      <html>
+      <head>
+        <style>
+          body { background-color: ${bgColor}; margin: 0; padding: 0; }
+          .element { position: absolute; }
+        </style>
+      </head>
+      <body>
+        ${elements.map(el => {
+          if (el.type === 'text') {
+            return `<div class="element" style="left:${el.x}px; top:${el.y}px; font-size:${el.fontSize}px; color:${el.color}; font-weight:${el.fontWeight}; font-style:${el.fontStyle}; text-decoration:${el.textDecoration};">${el.content}</div>`;
+          } else if (el.type === 'rect') {
+            return `<div class="element" style="left:${el.x}px; top:${el.y}px; width:${el.width}px; height:${el.height}px; background-color:${el.color};"></div>`;
+          } else if (el.type === 'circle') {
+            return `<div class="element" style="left:${el.x}px; top:${el.y}px; width:${el.width}px; height:${el.height}px; background-color:${el.color}; border-radius:50%;"></div>`;
+          } else if (el.type === 'image') {
+            return `<img src="${el.url}" class="element" style="left:${el.x}px; top:${el.y}px; width:${el.width}px; height:${el.height}px;" alt="image"/>`;
+          }
+          return '';
+        }).join('')}
+      </body>
+      </html>
+    `;
+  
+    try {
+      // Crear un archivo para enviar al backend
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const file = new File([blob], `template-${templateId}.html`, { type: 'text/html' });
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      const token = localStorage.getItem('token');
+  
+      // Llamar al backend para actualizar el template
+      const response = await axios.patch(`${BACKEND_URL}/api/user/actualizarTemplate`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        params: { id: templateId }, // Enviar el ID del template en los parámetros
+      });
+  
+      alert('Template actualizado exitosamente.');
+    } catch (error) {
+      console.error('Error al actualizar el template:', error);
+      alert('Ocurrió un error al actualizar el template.');
+    }
+  };
+
   useEffect(() => {
     const fetchTemplate = async (id) => {
       try {
@@ -456,6 +515,7 @@ const Editor = () => {
           </button>
           <button onClick={exportAsHTML}>Exportar como HTML</button>
           <button onClick={guardarTemplate}>Guardar Template</button>
+          <button onClick={actualizarTemplate}>Actualizar Template</button>
           <div>
             <label>Color de elemento:</label>
             <input 

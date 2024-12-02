@@ -11,16 +11,16 @@ const Support = () => {
         <div className="option-cards">
           {/* Chatbot Section */}
           <div className="option-card">
-            <h3>Habla con nuestro chatbot</h3>
+            <h3>FAQ</h3>
             <p>
-              Nuestro chatbot responderá a una serie de preguntas predeterminadas y te guiará por el camino para resolver tus problemas.
+              Respuestas a una serie de preguntas predeterminadas que te guiaran por el camino para resolver tus problemas.
             </p>
-            <button onClick={() => navigate('/chatbot')}>Chatear {'>'}</button> {/* Navega a la página del chatbot */}
+            <button onClick={() => navigate('/chatbot')}>VER{'>'}</button> {/* Navega a la página del chatbot */}
           </div>
 
           {/* Soporte Humano Section */}
           <div className="option-card">
-            <h3>Contacta al soporte humano</h3>
+            <h3>Contacta con cañete</h3>
             <p>
               Contáctanos con cualquier duda que tengas a nuestro soporte técnico que te responderá en la brevedad.
             </p>
