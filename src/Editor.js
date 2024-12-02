@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import debounce from 'lodash.debounce';
 import './Editor.css';
 
 const BACKEND_URL = 'http://localhost:3033';
+
+
+
+
 
 const Editor = () => {
   const [elements, setElements] = useState([]);
@@ -19,8 +24,12 @@ const Editor = () => {
   const [showFileLibrary, setShowFileLibrary] = useState(false);
   const [loadingFiles, setLoadingFiles] = useState(false);
   const [fileError, setFileError] = useState(null);
-  
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const templateId = queryParams.get('id');
+  const isTemp = queryParams.get('temp') === 'true';
   const canvasRef = useRef(null);
+  
 
   const fetchFiles = async () => {
     setLoadingFiles(true);
@@ -39,6 +48,133 @@ const Editor = () => {
       setLoadingFiles(false);
     }
   };
+
+  useEffect(() => {
+    const fetchTemplate = async (id) => {
+      try {
+        const token = localStorage.getItem('token');
+  
+        const response = await axios.get(`${BACKEND_URL}/api/user/obtenerTemplatePorId`, {
+          headers: { Authorization: `Bearer ${token}` },
+          params: { id },
+        });
+  
+        const templateLink = response.data.link;
+  
+        if (!templateLink) {
+          throw new Error('El backend no devolvió un link válido.');
+        }
+  
+        const templateContent = await fetch(templateLink).then((res) => {
+          if (!res.ok) {
+            throw new Error(`Error al descargar el archivo: ${res.statusText}`);
+          }
+          return res.text();
+        });
+  
+        console.log("Template cargado:", templateContent);
+        parseTemplateContent(templateContent);
+      } catch (error) {
+        console.error("Error al cargar el template:", error);
+        alert('Ocurrió un error al cargar el template. Por favor, verifica que el archivo esté disponible.');
+      }
+    };
+  
+    if (templateId) {
+      fetchTemplate(templateId);
+    } else if (isTemp) {
+      console.log("Nuevo template temporal, editor vacío.");
+    }
+  }, [templateId, isTemp]);
+
+  const parseTemplateContent = (html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+  
+    // Leer el fondo del body
+    const bodyStyle = doc.body.style.backgroundColor || '#ffffff';
+    setBgColor(bodyStyle);
+  
+    // Leer y procesar elementos del template (texto, imágenes, rectángulos, etc.)
+    const elementsArray = [];
+    doc.querySelectorAll('.element').forEach((el) => {
+      if (el.tagName === 'DIV' && el.style.left) {
+        elementsArray.push({
+          id: Date.now() + Math.random(),
+          type: el.textContent ? 'text' : 'rect',
+          x: parseInt(el.style.left, 10),
+          y: parseInt(el.style.top, 10),
+          width: el.offsetWidth || 100,
+          height: el.offsetHeight || 100,
+          color: el.style.backgroundColor || '#000000',
+          content: el.textContent || '',
+          fontSize: parseInt(el.style.fontSize, 10) || 16,
+          fontWeight: el.style.fontWeight || 'normal',
+          fontStyle: el.style.fontStyle || 'normal',
+          textDecoration: el.style.textDecoration || 'none',
+        });
+      } else if (el.tagName === 'IMG') {
+        elementsArray.push({
+          id: Date.now() + Math.random(),
+          type: 'image',
+          x: parseInt(el.style.left, 10),
+          y: parseInt(el.style.top, 10),
+          width: parseInt(el.style.width, 10),
+          height: parseInt(el.style.height, 10),
+          url: el.src,
+        });
+      }
+    });
+  
+    // Actualizar los elementos en el editor
+    setElements(elementsArray);
+  };
+  
+
+  const fetchTemplate = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+  
+      // Solicitar el link del template al backend
+      const response = await axios.get(`${BACKEND_URL}/api/user/obtenerTemplatePorId`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { id },
+      });
+  
+      const templateLink = response.data.link;
+  
+      if (!templateLink) {
+        throw new Error('El backend no devolvió un link válido.');
+      }
+  
+      // Descargar el contenido HTML del template
+      const templateContent = await fetch(templateLink).then((res) => {
+        if (!res.ok) {
+          throw new Error(`Error al descargar el archivo: ${res.statusText}`);
+        }
+        return res.text();
+      });
+  
+      console.log("Template cargado:", templateContent);
+      // Aquí puedes analizar el contenido HTML y cargarlo en el editor
+      parseTemplateContent(templateContent);
+    } catch (error) {
+      console.error("Error al cargar el template:", error);
+      alert('Ocurrió un error al cargar el template. Por favor, verifica que el archivo esté disponible.');
+    }
+  };
+
+  useEffect(() => {
+    const templateId = new URLSearchParams(window.location.search).get('id');
+    const isTemp = new URLSearchParams(window.location.search).get('temp') === 'true';
+  
+    if (templateId) {
+      // Cargar el template existente
+      fetchTemplate(templateId);
+    } else if (isTemp) {
+      console.log("Nuevo template temporal, editor vacío.");
+    }
+  }, []); // Solo necesita ejecutarse al montar el componente
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -166,13 +302,15 @@ const Editor = () => {
   };
 
   const guardarTemplate = async () => {
+    const templateId = new URLSearchParams(window.location.search).get('id');
+    const tempMode = new URLSearchParams(window.location.search).get('temp');
     const templateName = prompt("Ingrese el nombre del template:");
+  
     if (!templateName) {
       alert("Debe ingresar un nombre para el template.");
       return;
     }
   
-    // Exportar el contenido actual como HTML
     const htmlContent = `
       <html>
       <head>
@@ -201,22 +339,33 @@ const Editor = () => {
     try {
       const blob = new Blob([htmlContent], { type: 'text/html' });
       const file = new File([blob], `${templateName}.html`, { type: 'text/html' });
-  
       const formData = new FormData();
       formData.append('file', file);
       formData.append('key', templateName);
   
-      const token = localStorage.getItem('token'); // Obtener el token para autenticar
+      const token = localStorage.getItem('token');
   
-      const response = await axios.post(`${BACKEND_URL}/api/user/guardarTemplate`, formData, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      if (tempMode || !templateId) {
+        // Crear nuevo template
+        const response = await axios.post(`${BACKEND_URL}/api/user/guardarTemplate`, formData, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
   
-      if (response.status === 200) {
         alert('Template guardado exitosamente.');
+      } else {
+        // Actualizar template existente
+        const response = await axios.patch(`${BACKEND_URL}/api/user/actualizarTemplate`, formData, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+          params: { id: templateId },
+        });
+  
+        alert('Template actualizado exitosamente.');
       }
     } catch (error) {
       console.error('Error al guardar el template:', error);

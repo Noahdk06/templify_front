@@ -65,8 +65,8 @@ function App() {
             } />
 
             {/* Cambiamos Template por Editor */}
-            <Route path="/template/:id" element={<Editor />} />
-
+            <Route path="/Editor" element={<Editor />} />
+            
             {/* Ruta de advertencia por acceso no autorizado */}
             <Route path="/unauthorized" element={<Unauthorized />} />
           </Routes>
