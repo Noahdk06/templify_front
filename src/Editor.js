@@ -230,7 +230,7 @@ const Editor = () => {
       });
   
       console.log("Template cargado:", templateContent);
-      // Aquí puedes analizar el contenido HTML y cargarlo en el editor
+      // Aquí puedes analizar el contenido HTML y cargarlo en el editoar
       parseTemplateContent(templateContent);
     } catch (error) {
       console.error("Error al cargar el template:", error);
