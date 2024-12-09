@@ -154,40 +154,55 @@ const Editor = () => {
     const bodyStyle = doc.body.style.backgroundColor || '#ffffff';
     setBgColor(bodyStyle);
   
-    // Leer y procesar elementos del template (texto, imágenes, rectángulos, etc.)
+    // Procesar elementos
     const elementsArray = [];
     doc.querySelectorAll('.element').forEach((el) => {
-      if (el.tagName === 'DIV' && el.style.left) {
-        elementsArray.push({
-          id: Date.now() + Math.random(),
-          type: el.textContent ? 'text' : 'rect',
-          x: parseInt(el.style.left, 10),
-          y: parseInt(el.style.top, 10),
-          width: el.offsetWidth || 100,
-          height: el.offsetHeight || 100,
-          color: el.style.backgroundColor || '#000000',
-          content: el.textContent || '',
-          fontSize: parseInt(el.style.fontSize, 10) || 16,
-          fontWeight: el.style.fontWeight || 'normal',
-          fontStyle: el.style.fontStyle || 'normal',
-          textDecoration: el.style.textDecoration || 'none',
-        });
+      const computedStyle = el.style; // Usar el estilo inline
+      if (el.tagName === 'DIV') {
+        // Identificar si es texto
+        if (el.textContent && !computedStyle.width && !computedStyle.height) {
+          elementsArray.push({
+            id: Date.now() + Math.random(),
+            type: 'text',
+            x: parseInt(computedStyle.left, 10) || 0,
+            y: parseInt(computedStyle.top, 10) || 0,
+            color: computedStyle.color || '#000000',
+            content: el.textContent,
+            fontSize: parseInt(computedStyle.fontSize, 10) || 16,
+            fontWeight: computedStyle.fontWeight || 'normal',
+            fontStyle: computedStyle.fontStyle || 'normal',
+            textDecoration: computedStyle.textDecoration || 'none',
+          });
+        } else {
+          // Identificar rectángulos y círculos
+          elementsArray.push({
+            id: Date.now() + Math.random(),
+            type: computedStyle.borderRadius === '50%' ? 'circle' : 'rect',
+            x: parseInt(computedStyle.left, 10) || 0,
+            y: parseInt(computedStyle.top, 10) || 0,
+            width: parseInt(computedStyle.width, 10) || 100,
+            height: parseInt(computedStyle.height, 10) || 100,
+            color: computedStyle.backgroundColor || '#000000',
+          });
+        }
       } else if (el.tagName === 'IMG') {
+        // Procesar imágenes
         elementsArray.push({
           id: Date.now() + Math.random(),
           type: 'image',
-          x: parseInt(el.style.left, 10),
-          y: parseInt(el.style.top, 10),
-          width: parseInt(el.style.width, 10),
-          height: parseInt(el.style.height, 10),
+          x: parseInt(computedStyle.left, 10) || 0,
+          y: parseInt(computedStyle.top, 10) || 0,
+          width: parseInt(computedStyle.width, 10),
+          height: parseInt(computedStyle.height, 10),
           url: el.src,
         });
       }
     });
   
-    // Actualizar los elementos en el editor
     setElements(elementsArray);
   };
+  
+  
   
 
   const fetchTemplate = async (id) => {
@@ -451,8 +466,14 @@ const Editor = () => {
       <html>
       <head>
         <style>
-          body { background-color: ${bgColor}; }
-          .element { position: absolute; }
+          body { 
+            background-color: ${bgColor}; 
+            margin: 0; 
+            padding: 0; 
+          }
+          .element { 
+            position: absolute; 
+          }
         </style>
       </head>
       <body>
@@ -466,19 +487,19 @@ const Editor = () => {
           } else if (el.type === 'image') {
             return `<img src="${el.url}" class="element" style="left:${el.x}px; top:${el.y}px; width:${el.width}px; height:${el.height}px;" alt="image"/>`;
           }
-          return '';
+          return ''; // Ignorar elementos no reconocidos
         }).join('')}
       </body>
       </html>
     `;
-
+  
     const blob = new Blob([htmlContent], { type: 'text/html' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'template.html';
     link.click();
   };
-
+  
   return (
     <div className="editor-container">
       <div className="editor-toolbar">
